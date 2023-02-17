@@ -1,0 +1,142 @@
+<div class="container" style="margin:5px;">
+    <h2 >SO Details</h2>
+   
+        
+        <div style="flex-grow: 1; text-align: right; margin-bottom: 10px; display: inline;">
+            <button  routerLink="/soList" routerLinkActive="active" class="Add" style="margin-right:60% ;" ><span
+                 class="icons" style="padding-right: 3px;padding-bottom:3px;">Add</span> </button>
+                 <input style="width:200px;height:30px;margin-right: 10px;" type="text" maxlength="256"
+              [(ngModel)]="searchText" (keyup)="searchFilter()" placeholder="Search by any column">
+            <button (click)="download();" id="downloadbtn"  title="Download to Excel"><img
+                    src="../../assets/icons/download.png" class="icons" alt="Download"></button>
+        </div>
+        <div class="container tbl-container">
+        <div class="row tbl-fixed" >
+          
+            <table class="table-striped table-condensed table-fixed" *ngIf="isAuthor" >
+                <thead>
+                    <!-- <th style="border: 1px solid;">Region</th> -->
+                    <th style="border: 1px solid;">SO Name</th>
+                    <th style="border: 1px solid;">JR</th>
+                    <th style="border: 1px solid;">Req Creation Date</th>
+                    <th style="border: 1px solid;">Account</th>
+                    <th style="border: 1px solid;">Technology</th>
+                    <th style="border: 1px solid;">Role Details</th>
+                    <th style="border: 1px solid;">Region</th>
+                    <th style="border: 1px solid;">Location</th>
+                    <th style="border: 1px solid;">Target Open Positions</th>
+                    <th style="border: 1px solid;">Positions to be closed</th>
+                    <th style="border: 1px solid;">UST POC</th>
+                    <th style="border: 1px solid;">Recruiter</th>
+                    <th style="border: 1px solid;">UST TPM</th>
+                    <th style="border: 1px solid;">Dell Manager</th>
+                    <th style="border: 1px solid;">Status</th>
+                    <th style="border: 1px solid;">Band</th>
+                    <th style="border: 1px solid;">Project Id</th>
+                    <th style="border: 1px solid;">AM</th>
+                    <th style="border: 1px solid;">External Resource</th>
+                    <th style="border: 1px solid;">Internal Resource</th>
+                    <th style="border: 1px solid;">Actions</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of batchRecord">
+                        <td style="border: 1px solid;">{{data.soName}}</td>
+                        <td style="border: 1px solid;">{{data.jrCode}}</td>
+                        <td style="border: 1px solid;">{{data.requestCreationDate}}</td>
+                        <td style="border: 1px solid;">{{data.accountName}}</td>
+                        <td style="border: 1px solid;">{{data.technologyName}}</td>
+                        <td style="border: 1px solid;">{{data.role}}</td>
+                        <td style="border: 1px solid;">{{data.region}}</td>
+                        <td style="border: 1px solid;">{{data.location}}</td>
+                        <td style="border: 1px solid;">{{data.targetOpenPositions}}</td>
+                        <td style="border: 1px solid;">{{data.positionsTobeClosed}}</td>
+                        <td style="border: 1px solid;">{{data.ustpocName}}</td>
+                        <td style="border: 1px solid;">{{data.recruiterName}}</td>
+                        <td style="border: 1px solid;">{{data.usttpmName}}</td>
+                        <td style="border: 1px solid;">{{data.dellManagerName}}</td>
+                        <td style="border: 1px solid;">{{data.statusName}}</td>
+                        <td style="border: 1px solid;">{{data.band}}</td>
+                        <td style="border: 1px solid;">{{data.projectId}}</td>
+                        <td style="border: 1px solid;">{{data.accountManager}}</td>
+                        <td style="border: 1px solid;">{{data.externalResource}}</td>
+                        <td style="border: 1px solid;">{{data.internalResource}}</td>
+                        <td style="border: 1px solid;">
+                            <button (click)="editDetails(data)"><img src="../../assets/icons/edit.ico"
+                                    class="icons"></button> &nbsp;
+                            <button (click)="deleteDetails(data)"><img src="../../assets/icons/delete.png"
+                                    class="icons" /></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table-striped table-condensed table-fixed" *ngIf="!isAuthor">
+                <thead>
+                    <!-- <th style="border: 1px solid;">Region</th> -->
+                    <th style="border: 1px solid;">SO Name</th>
+                    <th style="border: 1px solid;">JR</th>
+                    <th style="border: 1px solid;">Req Creation Date</th>
+                    <th style="border: 1px solid;">Account</th>
+                    <th style="border: 1px solid;">Technology</th>
+                    <th style="border: 1px solid;">Role Details</th>
+                    <th style="border: 1px solid;">Region</th>
+                    <th style="border: 1px solid;">Location</th>
+                    <th style="border: 1px solid;">Target Open Positions</th>
+                    <th style="border: 1px solid;">Positions to be closed</th>
+                    <th style="border: 1px solid;">UST POC</th>
+                    <th style="border: 1px solid;">Recruiter</th>
+                    <th style="border: 1px solid;">UST TPM</th>
+                    <th style="border: 1px solid;">Dell Manager</th>
+                    <th style="border: 1px solid;">Status</th>
+                    <th style="border: 1px solid;">Band</th>
+                    <th style="border: 1px solid;">Project Id</th>
+                    <th style="border: 1px solid;">AM</th>
+                    <th style="border: 1px solid;">External Resource</th>
+                    <th style="border: 1px solid;">Internal Resource</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of batchRecord">
+                        <td style="border: 1px solid;">{{data.soName}}</td>
+                        <td style="border: 1px solid;">{{data.jrCode}}</td>
+                        <td style="border: 1px solid;">{{data.requestCreationDate}}</td>
+                        <td style="border: 1px solid;">{{data.accountName}}</td>
+                        <td style="border: 1px solid;">{{data.technologyName}}</td>
+                        <td style="border: 1px solid;">{{data.role}}</td>
+                        <td style="border: 1px solid;">{{data.region}}</td>
+                        <td style="border: 1px solid;">{{data.location}}</td>
+                        <td style="border: 1px solid;">{{data.targetOpenPositions}}</td>
+                        <td style="border: 1px solid;">{{data.positionsTobeClosed}}</td>
+                        <td style="border: 1px solid;">{{data.ustpocName}}</td>
+                        <td style="border: 1px solid;">{{data.recruiterName}}</td>
+                        <td style="border: 1px solid;">{{data.usttpmName}}</td>
+                        <td style="border: 1px solid;">{{data.dellManagerName}}</td>
+                        <td style="border: 1px solid;">{{data.statusName}}</td>
+                        <td style="border: 1px solid;">{{data.band}}</td>
+                        <td style="border: 1px solid;">{{data.projectId}}</td>
+                        <td style="border: 1px solid;">{{data.accountManager}}</td>
+                        <td style="border: 1px solid;">{{data.externalResource}}</td>
+                        <td style="border: 1px solid;">{{data.internalResource}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p>Row Count:{{rowCount}}</p>
+        <div class="row justify-content-center" style="margin-top: 10px;">
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <li class="page-item"><button class="btn btn-info" (click)="OnPreviousClicked()"
+                            [disabled]="!(currentPage > 1)">Previous</button></li>
+                    <li class="page-item active">
+                        <label style="margin-left:10px">Page</label>
+                        <input type="number" style="width: 2.2rem; height: 1.9rem;margin-right: 5px;"
+                            value="{{currentPage}}" (change)="OnPageNumberChanged($event)">
+                        <label>of
+                            {{totalPages}}
+                        </label>
+                    </li>
+                    <li class="page-item"><button class="btn btn-info" (click)="OnNextClicked()"
+                            [disabled]="(currentPage == totalPages)">Next</button></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

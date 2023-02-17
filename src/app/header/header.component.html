@@ -1,0 +1,19 @@
+<div class="hamburger-menu" *ngIf="header">
+  <input id="menu__toggle" type="checkbox" [(ngModel)]="isChecked" (change)="update()" />
+  <label class="menu__btn" for="menu__toggle"> <span></span> </label>
+  <ul class="menu__box">
+    <li *ngIf="dashboard"><a class="menu__item" routerLink="/dashboard" routerLinkActive="active"
+        (click)="onclick()">Dashboard</a></li>
+    <li *ngIf="sow"><a class="menu__item" routerLink="/sow" routerLinkActive="active" (click)="onclick()">SO Details</a>
+    </li>
+    <li *ngIf="candidatedetails"><a class="menu__item" routerLink="/candidatedetails" routerLinkActive="active"
+        (click)="onclick()">Candidate Details</a></li>
+    <li *ngIf="mapping"><a class="menu__item" routerLink="/mapping" routerLinkActive="active"
+        (click)="onclick()">SOCandidate Mapping</a></li>
+    <li *ngIf="domain"><a class="menu__item" routerLink="/domain" routerLinkActive="active"
+        (click)="onclick()">Domain</a></li>
+    <li *ngIf="technology"><a class="menu__item" routerLink="/technology" routerLinkActive="active"
+        (click)="onclick()">Technology</a></li>
+    <li *ngIf="login"><a class="menu__item" routerLink='/login' (click)="logOut()">LogOut</a></li>
+  </ul>
+</div>

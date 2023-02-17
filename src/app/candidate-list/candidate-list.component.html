@@ -1,0 +1,177 @@
+<div class="container" style="margin:5px">
+    <h2 class="header" style="margin-right: 550px;">Candidate Details</h2>
+    <button type="button" class="btn-close btn btn-danger " aria-label="Close" style="padding-left: 10px;padding-right: 10px;"(click)="cancel()">X</button>
+    <div class="container">
+        <form [formGroup]="candidateform"  novalidate>
+            <div class="row">
+                <div class="col-25">
+                    <label for="CandidateName">Candidate Name: </label>
+                </div>
+                <div class="col-75">
+                    <div class="form-group">
+                        <input type="text" name="candidateName" id="candidateName" formControlName="candidateName"
+                            placeholder="Enter Candidate Name" class="form-control" required>
+                        <div *ngIf="(f.candidateName.touched || submitted) && f.candidateName.invalid"
+                            class="text-danger">
+                            <div *ngIf="f.candidateName.errors.required">Name is required.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="DOB">Date of Birth: </label>
+                </div>
+                <div class="col-75">
+                    <input type="date" name="dob" id="dob" formControlName="dob" placeholder="Choose DOB"
+                        style="height:40px" required>
+                    <div *ngIf="(f.dob.touched || submitted) && f.dob.invalid" class="text-danger">
+                        <div *ngIf="f.dob.errors.required">DOB is required.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="MobileNo">MobileNo: </label>
+                </div>
+                <div class="col-75">
+                    <input type="text" name="mobileNo" id="mobileNo" formControlName="mobileNo"
+                        placeholder="Enter mobileNo" required>
+                    <div *ngIf="(f.mobileNo.touched || submitted) && f.mobileNo.invalid" class="text-danger">
+                        <div *ngIf="f.mobileNo.errors.required">Mobile Number is required.</div>
+                        <div *ngIf="(f.mobileNo.touched && f.mobileNo.invalid && (f.mobileNo.errors.minlength || f.mobileNo.errors.maxlength || f.mobileNo.errors?.pattern))">
+                            Mobile Number is incorrect.</div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="Email">Email: </label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="email" name="email" formControlName="email" placeholder="Enter email"
+                        required>
+                    <div *ngIf="(f.email.touched || submitted) && f.email.invalid" class="text-danger">
+                        <div *ngIf="f.email.errors.required">Email is required.</div>
+                        <div *ngIf="f.email.errors.email">Email seems invalid.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="Gender">Gender: </label>
+                </div>
+                <div class="col-75" style="margin-top:15px">
+                    <input type="radio" value="male" id="gender" name="gender" formControlName="gender"> Male
+                    <input type="radio" value="female" id="gender" name="gender" formControlName="gender"> Female
+                    <div *ngIf="(f.gender.touched || submitted) && f.gender.invalid" class="text-danger">
+                        <div *ngIf="f.gender.errors.required">Gender is required.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label for="status">Status:</label>
+                </div>
+                <div class="col-75">
+                    <select id="status" name="status" formControlName="status">
+                        <option value="Joined">Joined</option>
+                        <option value="Canceled">Canceled</option>
+                        <option value="Rejected">Rejected</option>
+                    </select>
+                    <div *ngIf="(f.status.touched || submitted) && f.status.invalid" class="text-danger">
+                        <div *ngIf="f.status.errors.required">Status is required.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="joiningDate">Joining Date: </label>
+                </div>
+                <div class="col-75">
+                    <input type="date" name="joiningDate" id="JoiningDate" formControlName="joiningDate"
+                        placeholder="Choose JoiningDate" style="height:40px" required>
+                    <div *ngIf="(f.joiningDate.touched || submitted) && f.joiningDate.invalid" class="text-danger">
+                        <div *ngIf="f.joiningDate.errors.required">Joining Date is required.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="skills">Skills:</label>
+                </div>
+                <div class="col-75">
+                    <textarea id="Skills" name="skills" placeholder="Enter Skills" formControlName="skills"
+                        style="height:200px"></textarea>
+                    <div *ngIf="(f.skills.touched || submitted) && f.skills.invalid" class="text-danger">
+                        <div *ngIf="f.skills.errors.required">Skills is required.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="location">Location: </label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="location" name="location" formControlName="location"
+                        placeholder="Enter location" required>
+                    <div *ngIf="(f.location.touched || submitted) && f.location.invalid" class="text-danger">
+                        <div *ngIf="f.location.errors.required">Location is required.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="address">Address:</label>
+                </div>
+                <div class="col-75">
+                    <textarea id="address" name="address" placeholder="Enter address" formControlName="address"
+                        style="height:200px"></textarea>
+                        <div *ngIf="(candidateform.controls['address'].invalid && candidateform.controls['address'].touched) || submitted && f.address.errors" class="text-danger">
+                            <div *ngIf="candidateform.controls['address'].errors.required || submitted && f.address.errors">
+                                Address is required
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="pincode">Pincode: </label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="pincode" name="pincode" formControlName="pincode" placeholder="Enter pincode"
+                        required>
+                        <div *ngIf="(candidateform.controls['pincode'].invalid && candidateform.controls['pincode'].touched) || submitted && f.pincode.errors" class="text-danger">
+                            <div *ngIf="candidateform.controls['pincode'].errors.required || submitted && f.pincode.errors">
+                                Pincode is required
+                            </div>
+                            <div *ngIf="candidateform.controls['pincode'].errors.minlength || candidateform.controls['pincode'].errors.maxlength">
+                            Pincode is incorrect.
+                            
+                            </div>
+                             <div *ngIf="candidateform.controls['pincode'].errors.pattern">
+                            Pincode Pattern mismatch.
+                            </div>
+                            </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="isInternal">Internal: </label>
+                </div>
+                <div class="col-75">
+                    <input type="checkbox" id="isInternal" name="isInternal" formControlName="isInternal"
+                        style="margin-top: 13px;">isInternal
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <button type="submit" class="btn btn-success" (click)="onSubmit()">Submit</button>
+                <button  class="btn btn-danger" (click)="cancel()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="result-loader" *ngIf="resultloader">
+    <div class="loading-image"></div>
+</div>
+<div style="margin-top:80px;">
+    <h2 style="text-align: center;">Login</h2>
+    <div class="container">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-25">
+                    <label for="loginName">User Name:</label>
+                </div>
+                <div class="col-50">
+                    <input type="text" name="loginName" id="loginName" formControlName="loginName"
+                        placeholder="Enter User Name" required>
+                    <div *ngIf="(f.loginName.touched || submitted) && f.loginName.invalid" class="text-danger">
+                        <div *ngIf="f.loginName.errors.required">*User Name is required.</div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="loginPassword">Password:</label>
+                </div>
+                <div class="col-50">
+                    <input type="password" name="loginPassword" id="loginPassword" formControlName="loginPassword"
+                        placeholder="Enter Password" required>
+                    <div *ngIf="(f.loginPassword.touched || submitted) && f.loginPassword.invalid" class="text-danger">
+                        <div *ngIf="f.loginPassword.errors.required">*Login Password is required.</div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

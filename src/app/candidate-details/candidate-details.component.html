@@ -1,0 +1,126 @@
+
+<div class="container" style="margin: 5px;">
+    <h2 >Candidate Details</h2> 
+   
+    
+        
+            <div style="flex-grow: 1; text-align: right; margin-bottom: 10px; display: inline;">
+                <!-- <div class="col-md-8"> -->
+               <button routerLink="/candidateList" routerLinkActive="active" class="Add" style="margin-right:60% ;">
+                  <span class="icons" style="padding-right: 3px;padding-bottom:3px;">Add</span>
+                 </button>                
+                  <!-- <div class="col-md-4" style="justify-items:right;"> -->
+                  <input style="width:200px;height:30px;margin-right: 10px;" type="text" maxlength="256"
+                  [(ngModel)]="searchText" (keyup)="searchFilter()" placeholder="Search by any column">
+                 <button (click)="download();" title="Download to Excel">
+                 <img src="../../assets/icons/download.png" class="icons" alt="Download">
+                </button>
+                  <!-- </div> -->
+            </div>
+            
+            <div class="container tbl-container">
+    <!-- <div style="flex-grow: 1;text-align: right; margin-bottom: 10px;display: inline;">
+        <button  routerLink="/candidateList" routerLinkActive="active" class="Add" ><span
+            class="icons" >Add</span> </button>
+        <button (click)="download();" id="downloadbtn"  title="Download to Excel"><img
+                        src="../../assets/icons/download.png" class="icons" alt="Download"></button>
+            </div> -->
+        <div class="row tbl-fixed">
+            
+            <div class="result-loader" *ngIf="resultloader">
+                <div class="loading-image"></div>
+            </div>
+            <table class=" table-striped table-condensed table-fixed"  *ngIf="isAuthor">
+                <thead>
+                    <th style="border: 1px solid;">Employee Name</th>
+                    <th style="border: 1px solid;">DOB</th>
+                    <th style="border: 1px solid;">Phone</th>
+                    <th style="border: 1px solid;">EmailId</th>
+                    <th style="border: 1px solid;">Gender</th>
+                    <th style="border: 1px solid;">Skills</th>
+                    <th style="border: 1px solid;">JoiningDate</th>
+                    <th style="border: 1px solid;">Location</th>
+                    <th style="border: 1px solid;">Address</th>
+                    <th style="border: 1px solid;">Pincode</th>
+                    <th style="border: 1px solid;">Status</th>
+                    <th style="border: 1px solid;">isInternal</th>
+                    <th style="border: 1px solid;">Actions</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let candidate of batchRecord">
+                        <td style="border: 1px solid;">{{candidate.candidateName}}</td>
+                        <td style="border: 1px solid;">{{candidate.dob}}</td>
+                        <td style="border: 1px solid;">{{candidate.mobileNo}}</td>
+                        <td style="border: 1px solid;">{{candidate.email}}</td>
+                        <td style="border: 1px solid;">{{candidate.gender}}</td>
+                        <td style="border: 1px solid;">{{candidate.skills}}</td>
+                        <td style="border: 1px solid;">{{candidate.joiningDate}}</td>
+                        <td style="border: 1px solid;">{{candidate.location}}</td>
+                        <td style="border: 1px solid;">{{candidate.address}}</td>
+                        <td style="border: 1px solid;">{{candidate.pincode}}</td>
+                        <td style="border: 1px solid;">{{candidate.status}}</td>
+                        <td style="border: 1px solid;">{{candidate.isInternal}}</td>
+                        <td style="border: 1px solid;">
+                            <button (click)="editDetails(candidate)"><img src="../../assets/icons/edit.ico"
+                                    class="icons"></button> &nbsp;
+                            <button (click)="deleteDetails(candidate)"><img src="../../assets/icons/delete.png"
+                                    class="icons" /></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class=" table-striped table-condensed table-fixed"  *ngIf="!isAuthor">
+                <thead>
+                    <th style="border: 1px solid;">Employee Name</th>
+                    <th style="border: 1px solid;">DOB</th>
+                    <th style="border: 1px solid;">Phone</th>
+                    <th style="border: 1px solid;">EmailId</th>
+                    <th style="border: 1px solid;">Gender</th>
+                    <th style="border: 1px solid;">Skills</th>
+                    <th style="border: 1px solid;">JoiningDate</th>
+                    <th style="border: 1px solid;">Location</th>
+                    <th style="border: 1px solid;">Address</th>
+                    <th style="border: 1px solid;">Pincode</th>
+                    <th style="border: 1px solid;">Status</th>
+                    <th style="border: 1px solid;">isInternal</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let candidate of batchRecord">
+                        <td style="border: 1px solid;">{{candidate.candidateName}}</td>
+                        <td style="border: 1px solid;">{{candidate.dob}}</td>
+                        <td style="border: 1px solid;">{{candidate.mobileNo}}</td>
+                        <td style="border: 1px solid;">{{candidate.email}}</td>
+                        <td style="border: 1px solid;">{{candidate.gender}}</td>
+                        <td style="border: 1px solid;">{{candidate.skills}}</td>
+                        <td style="border: 1px solid;">{{candidate.joiningDate}}</td>
+                        <td style="border: 1px solid;">{{candidate.location}}</td>
+                        <td style="border: 1px solid;">{{candidate.address}}</td>
+                        <td style="border: 1px solid;">{{candidate.pincode}}</td>
+                        <td style="border: 1px solid;">{{candidate.status}}</td>
+                        <td style="border: 1px solid;">{{candidate.isInternal}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p>Row Count:{{rowCount}}</p>
+        <div class="row justify-content-center" style="margin-top: 10px;">
+       
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <li class="page-item"><button class="btn btn-info" (click)="OnPreviousClicked()"
+                            [disabled]="!(currentPage > 1)">Previous</button></li>
+                    <li class="page-item active">
+                        <label style="margin-left:10px">Page</label>
+                        <input type="number" style="width: 2.2rem; height: 1.9rem;margin-right: 5px;"
+                            value="{{currentPage}}" (change)="OnPageNumberChanged($event)">
+                        <label>of
+                            {{totalPages}}
+                        </label>
+                    </li>
+                    <li class="page-item"><button class="btn btn-info" (click)="OnNextClicked()"
+                            [disabled]="(currentPage == totalPages)">Next</button></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
