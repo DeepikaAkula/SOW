@@ -14,8 +14,8 @@ export class CommonService {
   loadComponent(message:any){
     this.loadHeader.next(message);
   }
-  
-  headerContent(content:any){
-     this.loadHeaderContent.next(content);
-    }
+
+  headerContent(content: any) {
+    this.loadHeaderContent.next(content);
+  }
 }

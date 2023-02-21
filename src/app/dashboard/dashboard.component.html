@@ -87,21 +87,21 @@
                       <div class="cards_wrap">
                           <div class="card_item">
                               <div class="card_inner">
-                                  <div class="role_name">Location</div>
-                                  <ul style="list-style: none;" *ngFor="let loc of location">
-                                      <li>{{loc.name}}:{{loc.count}}</li>
-                                      
-                                  </ul>
+                                  <div class="role_name">Status</div>
+                                  <ul style="list-style: none;" *ngFor="let e of SO">
+                                    <li>{{e.name}}:{{e.count}}</li>
+                                                                       
+                                </ul>
                               </div>
                             </div>
                           <div class="card_item">
                               <div class="card_inner">
-                                  <div class="role_name"></div>
-                                  <ul style="list-style: none;">
-                                      <li></li>
-                                      <li></li>
-                                      
-                                  </ul>
+                                  <div class="role_name">Location</div>
+                                  <ul style="list-style: none;" *ngFor="let loc of location">
+                                    <li>{{loc.name}}:{{loc.count}}</li>
+                                    
+                                </ul>
+                                 
                               </div>
                           </div>
                           <div class="card_item">

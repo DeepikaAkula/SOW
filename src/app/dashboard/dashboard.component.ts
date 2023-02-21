@@ -18,10 +18,11 @@ export class DashboardComponent implements OnInit {
   regions: any;
   selectperiod: string;
   location: any;
+  SO: any;
   constructor(private service: DashboardService) { }
   ngOnInit(): void {
     this.selectedTeam = "Weekly";
-    this.selectperiod="Weekly"
+    this.selectperiod="Weekly";
     this.Username = this.getUserName();
     this.getSODashboardData();
     this.activeTab = 'SO';
@@ -32,13 +33,15 @@ export class DashboardComponent implements OnInit {
      this.statuses= result.filter(x=>x.category=='Status');
      this.technologies=result.filter(x=>x.category=='Technology');
      this.regions=result.filter(x=>x.category=='Region');
-     console.log(result);
+     
 
     })
   }
   getCandidateDashboardData(){
     this.service.GetCandidateDashboardData(this.selectperiod).subscribe(result=>{
       this.location=result.filter(x=>x.category=='Location');
+      this.SO=result.filter(x=>x.category=='SO')
+      
     })
   }
   onSelected(value: string): void {
