@@ -21,6 +21,12 @@ export class HeaderComponent implements OnInit  {
   constructor(private commonServ:CommonService) { }
 
   ngOnInit(): void {
+    this.commonServ.HeaderContent.subscribe(data => {
+      if (!data) {
+        this.isChecked = false;
+        this.eventChange.emit(this.isChecked);
+      }
+    });
     this.commonServ.loadMessage.subscribe(data =>{
       if(data){
         if (sessionStorage.getItem('userData') != null || sessionStorage.getItem('userData') != undefined) {
@@ -99,4 +105,5 @@ export class HeaderComponent implements OnInit  {
     this.isChecked = false;
     this.eventChange.emit(this.isChecked);
   }
+  
 }

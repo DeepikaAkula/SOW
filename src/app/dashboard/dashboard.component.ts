@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DashboardService } from '../services/dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,21 +7,54 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  Username:string="";
-  
-  constructor() {
-    
-   }
-
+  Username: string = "";
+  title = 'Bytes';
+  activeTab: string = 'SO Details';
+  selectedTeam: string;
+  Name:any;
+  statuses:any;
+  z: any;
+  technologies: any;
+  regions: any;
+  selectperiod: string;
+  location: any;
+  constructor(private service: DashboardService) { }
   ngOnInit(): void {
-    this.Username=this.getUserName();
+    this.selectedTeam = "Weekly";
+    this.selectperiod="Weekly"
+    this.Username = this.getUserName();
+    this.getSODashboardData();
+    this.activeTab = 'SO';
+  } 
+  getSODashboardData() {
+    console.log(this.selectedTeam);
+    this.service.GetSODashboardData(this.selectedTeam).subscribe(result => {
+     this.statuses= result.filter(x=>x.category=='Status');
+     this.technologies=result.filter(x=>x.category=='Technology');
+     this.regions=result.filter(x=>x.category=='Region');
+     console.log(result);
+
+    })
   }
-  longText = `The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog
-  from Japan. A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was
-  originally bred for hunting.`;
-  getUserName():any{
+  getCandidateDashboardData(){
+    this.service.GetCandidateDashboardData(this.selectperiod).subscribe(result=>{
+      this.location=result.filter(x=>x.category=='Location');
+    })
+  }
+  onSelected(value: string): void {
+    console.log(value); this.selectedTeam = value;
+    this.getSODashboardData();
+  } getUserName(): any {
     let data = sessionStorage.getItem('userData');
     let userInfo = (data) ? JSON.parse(data) : null;
     return userInfo.LoginName;
+  }
+  onTabClick(tab) {
+    this.activeTab = tab;
+  }
+  onSelectionChange(value:string){
+    this.selectperiod=value
+    this.getCandidateDashboardData();
+
   }
 }

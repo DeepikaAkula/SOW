@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { IDeactivate } from '../can-deactivate-guard.service';
+import { CommonService } from '../common.service';
 import { CandidateService } from '../services/candidate.service';
 
 @Component({
@@ -14,6 +15,7 @@ export class CandidateListComponent implements OnInit,IDeactivate {
   
   constructor(private service: CandidateService,
     private router:ActivatedRoute,
+    private commonServ:CommonService,
     private route:Router) { }
     submitted: boolean = false;
   editMode:any=this.router.snapshot.queryParams['editMode']
@@ -37,6 +39,7 @@ export class CandidateListComponent implements OnInit,IDeactivate {
   get f() { return this.candidateform.controls; }
 
   ngOnInit(): void {
+     this.commonServ.headerContent(false);
     console.log(this.editDetails);
     
     if(this.editMode){

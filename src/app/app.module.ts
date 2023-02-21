@@ -33,9 +33,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CandidateListComponent } from './candidate-list/candidate-list.component';
 import { CanDeactivateGuardService } from './can-deactivate-guard.service';
-import { MatCardModule } from '@angular/material';
-import{MatTabsModule} from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DashboardService } from './services/dashboard.service';
 
 
 @NgModule({
@@ -59,16 +58,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    MatCardModule,
-    MatTabsModule,
     BrowserAnimationsModule
-    
-   
-    
   ],
   providers: [CandidateService, SOWService, CandidatemappingService, DomainService, TechnologyService, StatusserviceService,
     LocationserviceService, RegionserviceService, UsttpmserviceService, UstpocserviceService, DellmanagerserviceService, RegionserviceService,
-    AccountserviceService, LoginService, AuthGuard,CommonService,ExcelService,CanDeactivateGuardService],
+    AccountserviceService, LoginService, AuthGuard,CommonService,ExcelService,CanDeactivateGuardService,DashboardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

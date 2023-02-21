@@ -1,5 +1,99 @@
-.example-card {
-    max-width: 400px;
-    margin-bottom: 8px;
-   display: inline-block;
+h2{
+    text-align: justify;
+  }
+  
+  .tabs-container{
+    background: #eee;
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 0;
+    height: 55px;
+    border-bottom: 1px solid #ccc;
+    width: 200%;
+    }
+    
+    .tabs-container .tab-link{
+    width: 33.33%;
+    position: relative;
+    height: 100%;
+    padding: 10px;
+    float: left;
+    text-align: justify;
+    }
+    
+    
+    .tab-link::after {
+        position: absolute;
+        left: 4px;
+        right: 4px;
+        bottom: 0;
+        display: block;
+        content: '';
+        border-bottom: 3px solid #04AA6D;
+        color: #18a790;
+        transform: scaleX(0);
+        transition: transform 250ms ease-in-out;
+      }
+      .tab-link:hover:after {
+        transform: scaleX(1);
+      }
+    .active::after {
+      transform: scaleX(1);
+    }
+      .active{
+        color: #04AA6D!important;
+      }
+  
+  
+  
+  
+  .cards_wrap{
+      padding: 10px;
+      width: 150%;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+   
+  }
+  
+  .cards_wrap .card_item{
+      padding: 15px 25px;
+      width: 2%;
+   
+  }
+  
+  .cards_wrap .card_inner{
+      background: #ccc;
+      border-radius: 5px;
+      padding: 10px 10px;
+      min-width: 200px;
+      min-height: 200px;
+      max-height: 200px;
+      width: 60%;
+    
+    overflow-y: scroll;
+    height: fit-content;
+    
+  }
+  
+  
+  .cards_wrap .card_item .role_name{
+      color: #e36686;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-size: 20px;
+   
+   
+  
+    
+  }
+  
+  ul{
+    list-style: none ;
+    margin-top: 10px;
+  }
+  .dropdown{
+    background-color: #ccc;
+    border-radius: 2px;
   }
