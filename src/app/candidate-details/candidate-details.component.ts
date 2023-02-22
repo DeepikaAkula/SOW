@@ -36,7 +36,7 @@ export class CandidateDetailsComponent implements OnInit {
     public formBuilder: FormBuilder,
     private login:LoginService,
     private router: Router) { 
-    this.isAuthor=this.login.isAuthor;
+    
   }
   
   candidateform = new FormGroup({
@@ -55,6 +55,7 @@ export class CandidateDetailsComponent implements OnInit {
     isInternal: new FormControl(),
   })
   ngOnInit(): void {  
+    this.isAuthor=JSON.parse(sessionStorage.getItem('author'));
     this.GetCandidateData(); 
   }
 

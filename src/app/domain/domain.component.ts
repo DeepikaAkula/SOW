@@ -26,11 +26,14 @@ export class DomainComponent implements OnInit {
   searchText: any;
   batchFilteredRecord: any;
   constructor(private service:DomainService,private excelService:ExcelService,private loginservice:LoginService) {
-    this.isAuthor=this.loginservice.isAuthor;
+   
    }
 
   ngOnInit(): void {
+    this.isAuthor=JSON.parse(sessionStorage.getItem('author'));
+
     this.GetAllDomainData();
+    
   }
   get f(){ return this.domainForm.controls;}
   domainForm=new FormGroup({

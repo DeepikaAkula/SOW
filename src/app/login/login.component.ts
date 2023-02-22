@@ -38,14 +38,16 @@ export class LoginComponent implements OnInit {
   }
   get f(){ return this.loginForm.controls;}
   async checkUserisValid() {
+
     let formValue = this.loginForm.value;
     let httpParams = new HttpParams().append("loginName", formValue.loginName).append("loginPassword", formValue.loginPassword);
     this.resultloader=true;
     await this.service.GetUserData(httpParams).subscribe(res => {
+      debugger;
       if (res.Status == 1) {
         this.userData = res;
-        if(this.userData.PermissionName!='View')
-          this.service.isAuthor=true;
+        if(this.userData.PermissionName.toLowerCase()=='edit')
+          sessionStorage.setItem('author','true')
         this.resultloader=false;
         sessionStorage.setItem('userData', JSON.stringify(this.userData));       
         this.router.navigate(['/dashboard']);      

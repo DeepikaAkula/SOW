@@ -32,16 +32,20 @@
             </div>
             <br>
             <div class="row">
-                <button type="submit">Submit</button>
+                <button type="submit" class="btn btn-success">Submit</button>
             </div>
         </form>
     </div>
     <div class="container">
+        <div style="flex-grow: 1; text-align: left; margin-bottom: 10px;display: inline;">
+            <input style="width:200px;height:30px;margin-right: 10px;margin-left:65%;" type="text" maxlength="256"
+            [(ngModel)]="searchText" (keyup)="searchFilter()" placeholder="Search by any column">
+           <button (click)="download();" title="Download to Excel">
+           <img src="../../assets/icons/download.png" class="icons" alt="Download">
+          </button>
+        </div>
         <div class="row tbl-fixed">
-            <div style="flex-grow: 1; text-align: left; margin-bottom: 10px;">
-                <button (click)="download();" id="downloadbtn" class="btn btn-primary" title="Download to Excel"><img
-                        src="../../assets/icons/download.png" class="icons" alt="Download"></button>
-            </div>
+           
             <table class="table table-fixed" *ngIf="isAuthor">
                 <thead>
                     <th style="border: 1px solid;">Technology Id</th>

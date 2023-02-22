@@ -24,11 +24,16 @@ export class TechnologyComponent implements OnInit {
   currentPage: number = 1;
   totalPages: number = 0;
   isAuthor: boolean = false;
+  batchFilteredRecord: any;
+  searchText: any;
+  isBatchSearch: boolean;
 
   constructor(private service: TechnologyService, private domainService: DomainService, private excelService: ExcelService, private login: LoginService) {
-    this.isAuthor = this.login.isAuthor;
+    
   }
   async ngOnInit() {
+    this.isAuthor=JSON.parse(sessionStorage.getItem('author'));
+    console.log(this.isAuthor);
     await this.populateDropdowns();
     this.GetAllTechData();
   }
@@ -228,4 +233,65 @@ export class TechnologyComponent implements OnInit {
       this.batchRecord = this.TechData.slice(startIndex, endIndex);
     }
   }
+  SetDefaultPaginationForcly(data: any) {
+    this.batchFilteredRecord = data;
+    let indexCounter: number = this.currentPage - 1;
+
+    let startIndex: number = indexCounter * Number(this.pageSizeSelected);
+    let endIndex: number = Number(this.pageSizeSelected) + startIndex;
+    if (this.batchFilteredRecord) {
+      this.batchRecord = this.batchFilteredRecord.slice(startIndex, endIndex);
+    }
+  }
+  searchFilter() {
+  
+    if (this.searchText.trim() == "") {
+     
+      this.SetDefaultPaginationForcly(this.TechData)
+    }
+    else if (this.searchText != undefined || this.searchText != "") {
+      this.isBatchSearch = true;
+      this.batchRecord = [];
+      this.isBatchSearch = true;
+    
+      this.TechData.forEach(data => {
+        for (let t of Object.keys(data)) {
+          console.log(t)
+          if (!(data[t] == null || data[t]  == undefined)) {
+
+            if (data[t].toString().toLowerCase().includes(this.searchText.toLowerCase())) {
+              this.batchRecord.push(data);
+              
+              break;
+            }
+           
+          }
+        }
+          this.SetDefaultPaginationForcly(this.batchRecord)
+        
+      });
+      // this.TechList.forEach(data => {
+      //   for (let t of Object.keys(data)) {
+      //     console.log(t)
+      //     if (!(data[t] == null || data[t]  == undefined)) {
+
+      //       if (data[t].toString().toLowerCase().includes(this.searchText.toLowerCase())) {
+      //         this.batchRecord.push(data);
+              
+      //         break;
+      //       }
+           
+      //     }
+      //   }
+      //     this.SetDefaultPaginationForcly(this.batchRecord)
+        
+      // });
+    } else {
+      this.batchRecord = [];
+      this.isBatchSearch = false;
+    }
+
+  
+  }
+  
 }

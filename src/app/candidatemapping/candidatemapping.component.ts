@@ -23,7 +23,7 @@ export class CandidatemappingComponent implements OnInit {
 
   constructor(private service: CandidatemappingService, private candidateService: CandidateService, private sowService: SOWService,
     private statusService: StatusserviceService, private excelService: ExcelService, private login: LoginService) {
-    this.isAuthor = this.login.isAuthor;
+    
   }
   isAuthor: boolean = false;
   MappingsList: any = [];
@@ -42,6 +42,7 @@ export class CandidatemappingComponent implements OnInit {
   StatusData:StatusModel[]=[];
 
   async ngOnInit() {
+    this.isAuthor=JSON.parse(sessionStorage.getItem('author'));
     await this.GetDropdown1();
     await this.GetDropdown2();
     await this.GetDropdown3();
@@ -277,6 +278,7 @@ export class CandidatemappingComponent implements OnInit {
     endIndex = Number(this.pageSizeSelected) + startIndex;
 
     this.batchRecord = this.MappingData.slice(startIndex, endIndex);
+    
   }
   OnNextClicked() {
     let startIndex: number = 0;
@@ -320,6 +322,7 @@ export class CandidatemappingComponent implements OnInit {
     if (this.MappingData) {
       this.batchRecord = this.MappingData.slice(startIndex, endIndex);
     }
+    console.log(this.batchRecord);
   }
   SetDefaultPaginationForcly(data: any) {
     this.batchFilteredRecord = data;

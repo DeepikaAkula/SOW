@@ -64,10 +64,11 @@ export class SOWComponent implements OnInit {
     private accountService: AccountserviceService, private tpmService: UsttpmserviceService, private pocService: UstpocserviceService, private recruiterService: RecruiterserviceService,
     private dellManagerService: DellmanagerserviceService, private statusService: StatusserviceService, private techService: TechnologyService,
     private mappingService: CandidatemappingService, private excelService: ExcelService,private login:LoginService,private router: Router) { 
-      this.isAuthor=this.login.isAuthor
+ 
     }
 
   async ngOnInit() {
+    this.isAuthor=JSON.parse(sessionStorage.getItem('author'));
     await this.GetDropdown1();
     await this.GetDropdown2();
     await this.GetDropdown3();

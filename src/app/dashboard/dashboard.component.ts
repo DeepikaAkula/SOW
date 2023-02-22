@@ -42,7 +42,9 @@ export class DashboardComponent implements OnInit {
       this.location=result.filter(x=>x.category=='Location');
       this.SO=result.filter(x=>x.category=='SO')
       
+      
     })
+    
   }
   onSelected(value: string): void {
     console.log(value); this.selectedTeam = value;
