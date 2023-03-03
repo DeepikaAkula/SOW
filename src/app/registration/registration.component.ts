@@ -132,8 +132,8 @@ export class RegistrationComponent implements OnInit {
   }
   download() {
     this.downloadObject = this.createObject(this.loginData)
-    let headers = [['SO Candidate Id', 'SO Name', 'Candidate Name', 'Status']]
-    this.excelService.jsonExportAsExcel(this.downloadObject, "SOCandidate Mapping", headers);
+    let headers = [['Login Name','Login Password','Login Id', 'Email Id','Role Id', 'Role Name']]
+    this.excelService.jsonExportAsExcel(this.downloadObject, "Login Data", headers);
   }
   createObject(data) {
     return {

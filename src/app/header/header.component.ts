@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
   header: boolean = false;
   public isChecked = true;
   @Output() eventChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  registartion:boolean=false;
+  registration:boolean=false;
 
   constructor(private commonServ: CommonService) { }
 
@@ -36,8 +36,8 @@ export class HeaderComponent implements OnInit {
           this.header = true;
           this.dashboard = true;
           this.login = true;
-          let data = sessionStorage.getItem('userData');
-          let resData = (data) ? JSON.parse(data) : null;
+          let userData = sessionStorage.getItem('userData');
+          let resData = (userData) ? JSON.parse(userData) : null;
           console.log(resData);
           let ScreenNames = resData.ScreenNames.split(',');
           if (sessionStorage.getItem('toggle') != null || sessionStorage.getItem('toggle') != undefined) {
@@ -63,7 +63,7 @@ export class HeaderComponent implements OnInit {
                 this.technology = objData.technology;
               }
               if(key=='registration'){
-                this.registartion=objData.registartion;
+                this.registration=objData.registration;
               }
             }
           }
@@ -85,10 +85,10 @@ export class HeaderComponent implements OnInit {
                 this.technology = true;
               }
               if(ScreenNames[i].toLowerCase()=='registration'){
-                this.registartion=true;
+                this.registration=true;
               }
             }
-            let obj = { sow: this.sow, candidatedetails: this.candidatedetails, mapping: this.mapping, domain: this.domain, technology: this.technology,registartion:this.registartion }
+            let obj = { sow: this.sow, candidatedetails: this.candidatedetails, mapping: this.mapping, domain: this.domain, technology: this.technology,registration:this.registration }
             sessionStorage.setItem('toggle', JSON.stringify(obj))
           }
         }
@@ -113,7 +113,7 @@ export class HeaderComponent implements OnInit {
     this.technology = false;
     this.login = false;
     this.dashboard = false;
-    this.registartion=false
+    this.registration=false
   }
 
   onclick() {

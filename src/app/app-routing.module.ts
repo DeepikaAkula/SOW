@@ -24,7 +24,7 @@ const routes: Routes = [
   {path:'dashboard',component:DashboardComponent,canActivate:[AuthGuard]},
   {path:'soList',component:SoListComponent,canDeactivate:[CanDeactivateGuardService]},
   {path:'candidateList',component:CandidateListComponent,canDeactivate:[CanDeactivateGuardService]},
-  {path:'registartion',component:RegistrationComponent}
+  {path:'registration',component:RegistrationComponent,canActivate:[AuthGuard]}
 ];
 
 @NgModule({
