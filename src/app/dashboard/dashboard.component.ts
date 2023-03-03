@@ -6,6 +6,7 @@ import { DashboardService } from '../services/dashboard.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
+
 export class DashboardComponent implements OnInit {
   Username: string = "";
   title = 'Bytes';
@@ -18,48 +19,48 @@ export class DashboardComponent implements OnInit {
   regions: any;
   selectperiod: string;
   location: any;
-  SO: any;
+
   constructor(private service: DashboardService) { }
+
   ngOnInit(): void {
     this.selectedTeam = "Weekly";
-    this.selectperiod="Weekly";
+    this.selectperiod="Weekly"
     this.Username = this.getUserName();
     this.getSODashboardData();
     this.activeTab = 'SO';
   } 
+
   getSODashboardData() {
-    console.log(this.selectedTeam);
     this.service.GetSODashboardData(this.selectedTeam).subscribe(result => {
      this.statuses= result.filter(x=>x.category=='Status');
      this.technologies=result.filter(x=>x.category=='Technology');
      this.regions=result.filter(x=>x.category=='Region');
-     
-
     })
   }
+
   getCandidateDashboardData(){
     this.service.GetCandidateDashboardData(this.selectperiod).subscribe(result=>{
       this.location=result.filter(x=>x.category=='Location');
-      this.SO=result.filter(x=>x.category=='SO')
-      
-      
     })
-    
   }
+
   onSelected(value: string): void {
-    console.log(value); this.selectedTeam = value;
+    this.selectedTeam = value;
     this.getSODashboardData();
-  } getUserName(): any {
+  } 
+  
+  getUserName(): any {
     let data = sessionStorage.getItem('userData');
     let userInfo = (data) ? JSON.parse(data) : null;
     return userInfo.LoginName;
   }
+
   onTabClick(tab) {
     this.activeTab = tab;
   }
+
   onSelectionChange(value:string){
     this.selectperiod=value
     this.getCandidateDashboardData();
-
   }
 }

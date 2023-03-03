@@ -11,6 +11,7 @@ import { TechnologyService } from '../services/technology.service';
   templateUrl: './technology.component.html',
   styleUrls: ['./technology.component.css']
 })
+
 export class TechnologyComponent implements OnInit {
   TechList: TechnologyModel[] = [];
   submitted: boolean = false;
@@ -24,16 +25,16 @@ export class TechnologyComponent implements OnInit {
   currentPage: number = 1;
   totalPages: number = 0;
   isAuthor: boolean = false;
-  batchFilteredRecord: any;
   searchText: any;
   isBatchSearch: boolean;
+  batchFilteredRecord: any;
+  rowCount: Number;
 
   constructor(private service: TechnologyService, private domainService: DomainService, private excelService: ExcelService, private login: LoginService) {
-    
   }
+
   async ngOnInit() {
-    this.isAuthor=JSON.parse(sessionStorage.getItem('author'));
-    console.log(this.isAuthor);
+    this.isAuthor = JSON.parse(sessionStorage.getItem('author'));
     await this.populateDropdowns();
     this.GetAllTechData();
   }
@@ -47,13 +48,13 @@ export class TechnologyComponent implements OnInit {
   GetAllTechData() {
     this.service.GetAllTechData().subscribe(data => {
       this.TechList = data;
+      this.rowCount = this.TechList.length;
       this.GetTechDetails();
       this.totalPages = Math.ceil(this.TechList.length / this.pageSizeSelected)
       this.SetDefaultPagination();
     }, err => {
       console.log(err)
     })
-
   }
 
   populateDropdowns() {
@@ -66,11 +67,24 @@ export class TechnologyComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.techForm.value);
     this.submitted = true;
+
     if (this.techForm.invalid) {
       return;
     }
+
+    let formValue = this.techForm.value;
+    if (formValue != null) {
+      let technologyName = formValue.technologyName;
+      let domainId = formValue.domainId;
+
+      var result = this.TechList.find(item => item.technologyName.trim().toLowerCase() === technologyName.trim().toLowerCase()
+        && item.domainId.toString() === domainId);
+      if (result != null) {
+        return alert('Duplicate record -"' + technologyName + '" already exists');
+      }
+    }
+
     if (this.editmode) {
       this.onEdit();
     }
@@ -108,7 +122,6 @@ export class TechnologyComponent implements OnInit {
       type: "post",
     };
     this.service.PostTechData(obj).subscribe(data => {
-      console.log(data);
       alert("Technology Added Successfully");
       this.techForm.reset();
       this.GetAllTechData();
@@ -134,8 +147,8 @@ export class TechnologyComponent implements OnInit {
       })
       return obj.domainName;
     }
-
   }
+
   // deleteDetails(tech:any){
   //   this.Id=tech.technologyId;
   //   var decision=confirm('Are you sure you want to delete?');
@@ -152,12 +165,13 @@ export class TechnologyComponent implements OnInit {
   //   alert('Technology with TechnologyId ' +this.Id+ ' Not Deleted')
   //  }
   // }
+
   download() {
     this.downloadObject = this.createObject(this.TechData)
-    console.log(this.TechData)
     let headers = [['Technology Id', 'Technology Name', 'Domain Name']]
     this.excelService.jsonExportAsExcel(this.downloadObject, "Technology Details", headers);
   }
+
   createObject(data) {
     return {
       'Technology Data': data,
@@ -175,9 +189,9 @@ export class TechnologyComponent implements OnInit {
         }
         this.TechData.push(obj);
       })
-      console.log(this.TechData)
     }
   }
+
   OnPreviousClicked() {
     let startIndex: number = 0;
     let endIndex: number = 0;
@@ -191,6 +205,7 @@ export class TechnologyComponent implements OnInit {
 
     this.batchRecord = this.TechData.slice(startIndex, endIndex);
   }
+
   OnNextClicked() {
     let startIndex: number = 0;
     let endIndex: number = 0;
@@ -225,6 +240,7 @@ export class TechnologyComponent implements OnInit {
 
     this.batchRecord = this.TechData.slice(startIndex, endIndex);
   }
+
   SetDefaultPagination() {
     let indexCounter: number = this.currentPage - 1;
     let startIndex: number = indexCounter * Number(this.pageSizeSelected);
@@ -233,6 +249,7 @@ export class TechnologyComponent implements OnInit {
       this.batchRecord = this.TechData.slice(startIndex, endIndex);
     }
   }
+
   SetDefaultPaginationForcly(data: any) {
     this.batchFilteredRecord = data;
     let indexCounter: number = this.currentPage - 1;
@@ -244,54 +261,31 @@ export class TechnologyComponent implements OnInit {
     }
   }
   searchFilter() {
-  
     if (this.searchText.trim() == "") {
-     
       this.SetDefaultPaginationForcly(this.TechData)
     }
     else if (this.searchText != undefined || this.searchText != "") {
       this.isBatchSearch = true;
       this.batchRecord = [];
       this.isBatchSearch = true;
-    
+
       this.TechData.forEach(data => {
         for (let t of Object.keys(data)) {
           console.log(t)
-          if (!(data[t] == null || data[t]  == undefined)) {
+          if (!(data[t] == null || data[t] == undefined)) {
 
             if (data[t].toString().toLowerCase().includes(this.searchText.toLowerCase())) {
               this.batchRecord.push(data);
-              
+
               break;
             }
-           
           }
         }
-          this.SetDefaultPaginationForcly(this.batchRecord)
-        
+        this.SetDefaultPaginationForcly(this.batchRecord)
       });
-      // this.TechList.forEach(data => {
-      //   for (let t of Object.keys(data)) {
-      //     console.log(t)
-      //     if (!(data[t] == null || data[t]  == undefined)) {
-
-      //       if (data[t].toString().toLowerCase().includes(this.searchText.toLowerCase())) {
-      //         this.batchRecord.push(data);
-              
-      //         break;
-      //       }
-           
-      //     }
-      //   }
-      //     this.SetDefaultPaginationForcly(this.batchRecord)
-        
-      // });
     } else {
       this.batchRecord = [];
       this.isBatchSearch = false;
     }
-
-  
   }
-  
 }

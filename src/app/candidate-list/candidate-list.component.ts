@@ -11,16 +11,18 @@ import { CandidateService } from '../services/candidate.service';
   templateUrl: './candidate-list.component.html',
   styleUrls: ['./candidate-list.component.css']
 })
-export class CandidateListComponent implements OnInit,IDeactivate {
-  
+
+export class CandidateListComponent implements OnInit, IDeactivate {
+
   constructor(private service: CandidateService,
-    private router:ActivatedRoute,
-    private commonServ:CommonService,
-    private route:Router) { }
-    submitted: boolean = false;
-  editMode:any=this.router.snapshot.queryParams['editMode']
-  editDetails:any=this.router.snapshot.queryParams['myArray'];
-  Id:any;
+    private router: ActivatedRoute,
+    private commonServ: CommonService,
+    private route: Router) { }
+
+  submitted: boolean = false;
+  editMode: any = this.router.snapshot.queryParams['editMode']
+  editDetails: any = this.router.snapshot.queryParams['myArray'];
+  Id: any;
   candidateform = new FormGroup({
     candidateName: new FormControl('', [Validators.required]),
     dob: new FormControl('', [Validators.required]),
@@ -33,48 +35,43 @@ export class CandidateListComponent implements OnInit,IDeactivate {
     skills: new FormControl('', [Validators.required]),
     location: new FormControl('', [Validators.required]),
     address: new FormControl('', [Validators.required]),
-    pincode: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(6),Validators.pattern("^[0-9]*$")]),
+    pincode: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(6), Validators.pattern("^[0-9]*$")]),
     isInternal: new FormControl(),
   })
   get f() { return this.candidateform.controls; }
 
   ngOnInit(): void {
-     this.commonServ.headerContent(false);
-    console.log(this.editDetails);
-    
-    if(this.editMode){
-      this.service.GetCandidateById(this.editDetails).subscribe(res=>{
-         res.map((obj)=>{
-           this.Id=obj.candidateId;
-          this.candidateform.patchValue({
-        candidateName:obj.candidateName,
-        dob: this.dateTrim(obj.dob),
-        address:  obj.address,
-        email:  obj.email,
-        gender: obj.gender,
-        joiningDate: this.dateTrim(obj.joiningDate),
-        location:  obj.location,
-        mobileNo:  obj.mobileNo,
-        pincode: obj.pincode,
-        skills: obj.skills,
-        status: obj.status,
-        isInternal:obj.isInternal
-         })
-       
-      })
-  
-      }) 
-     
+    this.commonServ.headerContent(false);
 
+    if (this.editMode) {
+      this.service.GetCandidateById(this.editDetails).subscribe(res => {
+        res.map((obj) => {
+          this.Id = obj.candidateId;
+          this.candidateform.patchValue({
+            candidateName: obj.candidateName,
+            dob: this.dateTrim(obj.dob),
+            address: obj.address,
+            email: obj.email,
+            gender: obj.gender,
+            joiningDate: this.dateTrim(obj.joiningDate),
+            location: obj.location,
+            mobileNo: obj.mobileNo,
+            pincode: obj.pincode,
+            skills: obj.skills,
+            status: obj.status,
+            isInternal: obj.isInternal
+          })
+        })
+      })
     }
   }
+
   dateTrim(data: any) {
     let datearr = data.split("T")
     return datearr[0];
   }
-  
+
   onSubmit() {
-    console.log(this.candidateform.value);
     this.submitted = true;
     if (this.candidateform.invalid) {
       return;
@@ -86,16 +83,17 @@ export class CandidateListComponent implements OnInit,IDeactivate {
       this.onAdd();
     }
   }
+
   onAdd() {
     let obj = this.candidateform.value;
     obj.isInternal = (obj.isInternal != true) ? false : true;
     this.service.PostCandidateData(obj).subscribe(data => {
-      console.log(data);
       alert("Candidate Added Successfully");
       this.candidateform.reset();
       //this.GetCandidateData();
     })
   }
+
   onEdit() {
     let formValue = this.candidateform.value;
     let obj = {
@@ -124,7 +122,8 @@ export class CandidateListComponent implements OnInit,IDeactivate {
       this.Id = null
     })
   }
-  cancel(){
+
+  cancel() {
     this.route.navigate(['/candidatedetails']);
   }
   // canDeactivate(): Promise<boolean> | boolean {
@@ -135,15 +134,13 @@ export class CandidateListComponent implements OnInit,IDeactivate {
   //   return false;
   //   }
   //   }
-  canExit () {
-    console.log(this.candidateform.value);
-    if(this.candidateform.dirty){
+
+  canExit() {
+    if (this.candidateform.dirty) {
       return confirm('You have unsaved changes. Do you really want to discard these changes?');
     }
-    else{
+    else {
       return true;
     }
-
   }
-
 }

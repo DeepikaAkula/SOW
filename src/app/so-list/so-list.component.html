@@ -5,11 +5,11 @@
 </div>
 <div class="container" style="margin-top:20px">
     <h2 class="header" style="margin-right: 650px;">SO Details</h2>
-    <button type="button" class="btn-close btn btn-danger  " aria-label="Close" style="padding-left: 10px;padding-right: 10px;"(click)="cancel()">X</button>
-
+    <button type="button" class="btn-close btn btn-danger  " aria-label="Close"
+        style="padding-left: 10px;padding-right: 10px;" (click)="cancel()">X</button>
 
     <div class="container">
-        <form [formGroup]="SowForm" >
+        <form [formGroup]="SowForm">
             <div class="row">
                 <div class="col-25">
                     <label for="soName"> SO Name: </label>
@@ -21,7 +21,6 @@
                         <div *ngIf="f.soName.errors.required">*SO Name is required.</div>
                     </div>
                 </div>
-
             </div>
             <div class="row">
                 <div class="col-25">
@@ -34,7 +33,6 @@
                         <div *ngIf="f.jrCode.errors.required">*JR Code is required.</div>
                     </div>
                 </div>
-
             </div>
             <div class="row">
                 <div class="col-25">
@@ -49,8 +47,8 @@
                         <div *ngIf="f.requestCreationDate.errors.required">*Request Creation Date is required.</div>
                     </div>
                 </div>
-
             </div>
+
             <div class="row">
                 <div class="col-25">
                     <label for="accountId">Account: </label>
@@ -65,6 +63,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-25">
                     <label for="technologyId">Technology: </label>
@@ -80,6 +79,7 @@
                     </div>
                 </div>
             </div>
+            
             <div class="row">
                 <div class="col-25">
                     <label for="role">Role/Technology Details: </label>
@@ -127,8 +127,8 @@
                 </div>
                 <div class="col-75">
                     <input type="number" id="targetOpenPositions" name="targetOpenPositions"
-                        formControlName="targetOpenPositions" placeholder="Please Enter the Number"
-                        style="height:40px" required>
+                        formControlName="targetOpenPositions" placeholder="Please Enter the Number" style="height:40px"
+                        required>
                     <div *ngIf="(f.targetOpenPositions.touched || submitted) && f.targetOpenPositions.invalid"
                         class="text-danger">
                         <div *ngIf="f.targetOpenPositions.errors.required">*Target Open Positions is required.</div>
@@ -141,8 +141,8 @@
                 </div>
                 <div class="col-75">
                     <input type="number" name="positionsTobeClosed" id="positionsTobeClosed"
-                        formControlName="positionsTobeClosed" placeholder="Please Enter the Number"
-                        style="height:40px" required>
+                        formControlName="positionsTobeClosed" placeholder="Please Enter the Number" style="height:40px"
+                        required>
                     <div *ngIf="(f.positionsTobeClosed.touched || submitted) && f.positionsTobeClosed.invalid"
                         class="text-danger">
                         <div *ngIf="f.positionsTobeClosed.errors.required">*Positions Tobe Closed is required.</div>

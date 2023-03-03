@@ -1,52 +1,44 @@
-<div class="result-loader" *ngIf="resultloader">
-    <div class="loading-image"></div>
-</div>
-<div class="container" style="margin-top:20px;">
-    <h2>SOCandidate Mapping</h2>
-
+<div class="container" style="margin-top:20px">
+    <h2>Registration</h2>
     <div class="container">
-        <form [formGroup]="mapppingForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="regForm" (ngSubmit)="onSubmit()">
             <div class="row">
                 <div class="col-25">
-                    <label for="candidateId">Candidate Name:</label>
+                    <label for="userName">User Name:</label>
                 </div>
                 <div class="col-75">
-                    <select id="candidateId" name="candidateId" formControlName="candidateId">
-                        <option disabled>Select a candidate:</option>
-                        <option *ngFor="let candidate of CandidateData" value="{{candidate.candidateId}}">
-                            {{candidate.candidateName}}</option>
-                    </select>
-                    <div *ngIf="(f.candidateId.touched || submitted) && f.candidateId.invalid" class="text-danger">
-                        <div *ngIf="f.candidateId.errors.required">*CandidateName is required.</div>
+                    <input type="text" id="userName" name="userName" formControlName="userName"
+                        placeholder="Enter User Name" required>
+                    <div *ngIf="(f.userName.touched || submitted) && f.userName.invalid"
+                        class="text-danger">
+                        <div *ngIf="f.userName.errors.required">*User Name is required.</div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-25">
-                    <label for="sowId">SO Name:</label>
+                    <label for="emailId">Email ID:</label>
                 </div>
                 <div class="col-75">
-                    <select id="sowId" name="sowId" formControlName="sowId">
-                        <option disabled>Select a SO:</option>
-                        <option *ngFor="let sow of SOData" value="{{sow.sowId}}">{{sow.soName}}</option>
-                    </select>
-                    <div *ngIf="(f.sowId.touched || submitted) && f.sowId.invalid" class="text-danger">
-                        <div *ngIf="f.sowId.errors.required">*SO Name is required.</div>
+                    <input type="text" id="emailId" name="emailId" formControlName="emailId"
+                        placeholder="Enter Email Id" required>
+                    <div *ngIf="(f.emailId.touched || submitted) && f.emailId.invalid"
+                        class="text-danger">
+                        <div *ngIf="f.emailId.errors.required">*Email ID is required.</div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-25">
-                    <label for="statusId">Status:</label>
+                    <label for="role">Role:</label>
                 </div>
                 <div class="col-75">
-                    <select id="statusId" name="statusId" formControlName="statusId">
-                        <option disabled>Select a Status:</option>
-                        <option *ngFor="let status of StatusData" value="{{status.statusId}}">{{status.statusName}}
-                        </option>
+                    <select id="role" name="role" formControlName="role">
+                        <option disabled>Select a role:</option>
+                        <option *ngFor="let roles of roleName" value="{{roles.roleId}}">{{roles.roleName}}</option> 
                     </select>
-                    <div *ngIf="(f.statusId.touched || submitted) && f.statusId.invalid" class="text-danger">
-                        <div *ngIf="f.statusId.errors.required">*Status is required.</div>
+                    <div *ngIf="(f.role.touched || submitted) && f.role.invalid" class="text-danger">
+                        <div *ngIf="f.role.errors.required">*Role is required.</div>
                     </div>
                 </div>
             </div>
@@ -71,16 +63,16 @@
             </div>
             <table class="table table-fixed">
                 <thead>
-                    <th class="tableborder">SO Name</th>
-                    <th class="tableborder">Candidate Name</th>
-                    <th class="tableborder">Status</th>
+                    <th class="tableborder">User Name</th>
+                    <th class="tableborder">Email Id</th>
+                    <th class="tableborder">Role</th>
                     <th class="tableborder" *ngIf="isAuthor">Actions</th>
                 </thead>
-                <tbody *ngIf="MappingData">
+                <tbody *ngIf="loginData">
                     <tr *ngFor="let map of batchRecord">
-                        <td class="tableborder">{{map.soName}}</td>
-                        <td class="tableborder">{{map.candidateName}}</td>
-                        <td class="tableborder">{{map.statusName}}</td>
+                        <td class="tableborder">{{map.loginName}}</td>
+                        <td class="tableborder">{{map.emailId}}</td>
+                        <td class="tableborder">{{map.roleName}}</td>
                         <td class="tableborder" *ngIf="isAuthor">
                             <button (click)="editDetails(map)"><img src="../../assets/icons/edit.ico"
                                     class="icons"></button> &nbsp;

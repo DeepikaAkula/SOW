@@ -24,54 +24,37 @@
             </div>
         </form>
     </div>
+    <div style="flex-grow: 1; text-align: left; margin-bottom: 10px;display: inline;">
+        <input style="width:200px;height:30px;margin-right: 10px;margin-left:65%;" type="text" maxlength="256"
+            [(ngModel)]="searchText" (keyup)="searchFilter()" placeholder="Search by any column">
+        <button (click)="download();" title="Download to Excel">
+            <img src="../../assets/icons/download.png" class="icons" alt="Download">
+        </button>
+    </div>
+
     <div class="container">
-        <div style="flex-grow: 1; text-align: right; margin-bottom: 10px; display: inline;">
-            <!-- <div class="col-md-8"> -->
-                      
-              <!-- <div class="col-md-4" style="justify-items:right;"> -->
-              <input style="width:200px;height:30px;margin-right: 10px;margin-left:65%;" type="text" maxlength="256"
-              [(ngModel)]="searchText" (keyup)="searchFilter()" placeholder="Search by any column">
-             <button (click)="download();" title="Download to Excel">
-             <img src="../../assets/icons/download.png" class="icons" alt="Download">
-            </button>
-              <!-- </div> -->
-        </div>
         <div class="row tbl-fixed">
             <div style="flex-grow: 1; text-align: left; margin-bottom: 10px;">
-               
             </div>
-            <table class="table table-fixed" *ngIf="isAuthor">
+            <table class="table table-fixed" >
                 <thead>
-                    <th style="border: 1px solid;">Domain Id</th>
-                    <th style="border: 1px solid;">Domain Name</th>
-                    <th style="border: 1px solid;" >Actions</th>
+                    <th class="tableborder">Domain Id</th>
+                    <th class="tableborder">Domain Name</th>
+                    <th class="tableborder" *ngIf="isAuthor">Actions</th>
                 </thead>
                 <tbody>
                     <tr *ngFor="let domain of batchRecord">
-                        <td style="border: 1px solid;">{{domain.domainId}}</td>
-                        <td style="border: 1px solid;">{{domain.domainName}}</td>
-                        <td style="border: 1px solid;">
+                        <td class="tableborder">{{domain.domainId}}</td>
+                        <td class="tableborder">{{domain.domainName}}</td>
+                        <td class="tableborder" *ngIf="isAuthor">
                             <button (click)="editDetails(domain)"><img src="../../assets/icons/edit.ico"
                                     class="icons"></button> &nbsp;
-                            <!-- <button (click)="deleteDetails(domain)"><img src="../../assets/icons/delete.png"
-                            class="icons" /></button> -->
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <table class="table table-fixed" *ngIf="!isAuthor">
-                <thead>
-                    <th style="border: 1px solid;">Domain Id</th>
-                    <th style="border: 1px solid;">Domain Name</th>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let domain of batchRecord">
-                        <td style="border: 1px solid;">{{domain.domainId}}</td>
-                        <td style="border: 1px solid;">{{domain.domainName}}</td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
+        <p>Row Count: {{rowCount}}</p>
         <div class="row justify-content-center" style="margin-top: 10px;">
             <nav>
                 <ul class="pagination justify-content-center">

@@ -31,6 +31,7 @@ import { UsttpmserviceService } from '../services/usttpmservice.service';
   templateUrl: './sow.component.html',
   styleUrls: ['./sow.component.css']
 })
+
 export class SOWComponent implements OnInit {
   SowList: SOModel[] = []
   submitted: boolean = false;
@@ -53,22 +54,22 @@ export class SOWComponent implements OnInit {
   currentPage: number = 1;
   totalPages: number = 0;
   resultloader: boolean = false;
-  isAuthor:boolean=false;
+  isAuthor: boolean = false;
   rowCount: number;
   isBatchSearch: boolean;
   searchText: any;
   batchFilteredRecord: any;
-  isChecked: boolean=false;
-  @Output() eventChange:EventEmitter<boolean> =new EventEmitter<boolean>();
+  isChecked: boolean = false;
+  @Output() eventChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   constructor(private service: SOWService, private regionService: RegionserviceService, private locationService: LocationserviceService,
     private accountService: AccountserviceService, private tpmService: UsttpmserviceService, private pocService: UstpocserviceService, private recruiterService: RecruiterserviceService,
     private dellManagerService: DellmanagerserviceService, private statusService: StatusserviceService, private techService: TechnologyService,
-    private mappingService: CandidatemappingService, private excelService: ExcelService,private login:LoginService,private router: Router) { 
- 
-    }
+    private mappingService: CandidatemappingService, private excelService: ExcelService, private login: LoginService, private router: Router) {
+  }
 
   async ngOnInit() {
-    this.isAuthor=JSON.parse(sessionStorage.getItem('author'));
+    this.isAuthor = JSON.parse(sessionStorage.getItem('author'));
     await this.GetDropdown1();
     await this.GetDropdown2();
     await this.GetDropdown3();
@@ -81,6 +82,7 @@ export class SOWComponent implements OnInit {
     await this.GetDropdown10();
     this.GetSowData();
   }
+
   SowForm = new FormGroup({
     soName: new FormControl('', [Validators.required]),
     jrCode: new FormControl('', [Validators.required]),
@@ -103,107 +105,116 @@ export class SOWComponent implements OnInit {
     externalResource: new FormControl(),
     internalResource: new FormControl()
   })
-  get f() { return this.SowForm.controls; }
 
+  get f() { return this.SowForm.controls; }
 
   GetSowData() {
     this.resultloader = true;
     this.service.GetAllSowData().subscribe(res => {
-      console.log(res);
-       this.SowList = res;
-       this.rowCount=this.SowList.length;
-       this.SOData = [];
-       this.SOData =res
-        //  this.GetSODetails();      
+      this.SowList = res;
+      this.rowCount = this.SowList.length;
+      this.SOData = [];
+      this.SOData = res
+      //  this.GetSODetails();      
       this.resultloader = false;
       this.totalPages = Math.ceil(this.SowList.length / this.pageSizeSelected);
       this.SetDefaultPagination();
     }, err => {
-       console.log(err);
-      })
-    }
+      console.log(err);
+    })
+  }
 
-  GetDropdown1(){
-    return new Promise((res,rej)=>{
+  GetDropdown1() {
+    return new Promise((res, rej) => {
       this.accountService.GetAllAccountData().subscribe(result => {
         this.accountList = result;
         res('')
       })
     })
   }
-  GetDropdown2(){
-    return new Promise((res,rej)=>{
+
+  GetDropdown2() {
+    return new Promise((res, rej) => {
       this.techService.GetAllTechData().subscribe(result => {
         this.technologyList = result;
         res('')
       })
     })
   }
-  GetDropdown3(){
-    return new Promise((res,rej)=>{
+
+  GetDropdown3() {
+    return new Promise((res, rej) => {
       this.recruiterService.GetAllRecruiterData().subscribe(result => {
         this.recruiterList = result;
         res('');
       })
     })
   }
-  GetDropdown4(){
-    return new Promise((res,rej)=>{
+
+  GetDropdown4() {
+    return new Promise((res, rej) => {
       this.pocService.GetAllUstPocData().subscribe(result => {
-          this.ustPocList = result;
-          res('')
+        this.ustPocList = result;
+        res('')
+      })
     })
-  })
   }
-  GetDropdown5(){
-    return new Promise((res,rej)=>{
+
+  GetDropdown5() {
+    return new Promise((res, rej) => {
       this.dellManagerService.GetAllDellManagerData().subscribe(result => {
         this.dellManagerList = result;
         res('')
       })
     })
   }
-  GetDropdown6(){
-    return new Promise((res,rej)=>{
+
+  GetDropdown6() {
+    return new Promise((res, rej) => {
       this.statusService.GetAllStatusData().subscribe(result => {
         this.statusList = result;
         res('')
       })
     })
   }
-  GetDropdown7(){
-    return new Promise((res,rej)=>{
+
+  GetDropdown7() {
+    return new Promise((res, rej) => {
       this.regionService.GetAllRegionData().subscribe(result => {
         this.regionList = result;
         res('')
       })
     })
   }
-  GetDropdown8(){
-    return new Promise((res,rej)=>{
+
+  GetDropdown8() {
+    return new Promise((res, rej) => {
       this.tpmService.GetAllUSTTPMData().subscribe(result => {
         this.ustTpmList = result;
         res('')
       })
     })
   }
-  GetDropdown9(){
-    return new Promise((res,rej)=>{
+
+  GetDropdown9() {
+    return new Promise((res, rej) => {
       this.locationService.GetAllLocationData().subscribe(result => {
         this.locationList = result;
         res('')
       })
     })
   }
-  GetDropdown10(){
-    return new Promise((res,rej)=>{
+
+  GetDropdown10() {
+    return new Promise((res, rej) => {
       this.mappingService.GetAllCandidateMappingData().subscribe((result) => {
         this.mappinglst = result;
         res('')
       })
     })
   }
-  Add(){
+
+  Add() {
     this.router.navigate(["/soList"]);
   }
   // async populateDropdowns() {
@@ -285,10 +296,7 @@ export class SOWComponent implements OnInit {
   //     err => console.log(err))
   // }
 
-
   onSubmit() {
-    //debugger;
-    console.log(this.SowForm.value);
     this.submitted = true;
     if (this.SowForm.invalid) {
       return;
@@ -300,6 +308,7 @@ export class SOWComponent implements OnInit {
       this.onAdd();
     }
   }
+
   onEdit() {
     let formValue = this.SowForm.value;
 
@@ -339,6 +348,7 @@ export class SOWComponent implements OnInit {
       this.Id = null
     })
   }
+
   onAdd() {
     let formValue = this.SowForm.value;
 
@@ -367,7 +377,6 @@ export class SOWComponent implements OnInit {
     };
 
     this.service.PostSowData(obj).subscribe(data => {
-      console.log(data);
       alert("Candidate Added Successfully");
       this.SowForm.reset();
       this.GetSowData();
@@ -377,7 +386,7 @@ export class SOWComponent implements OnInit {
   editDetails(data: any) {
     this.editmode = true;
     this.Id = data.sowId;
-    this.router.navigate(['/soList'],{queryParams:{editMode:this.editmode,myArray:this.Id}});
+    this.router.navigate(['/soList'], { queryParams: { editMode: this.editmode, myArray: this.Id } });
     // data.requestCreationDate = this.dateTrim(data.requestCreationDate)
     // console.log(data.requestCreationDate)
     // this.SowForm.patchValue({
@@ -414,7 +423,6 @@ export class SOWComponent implements OnInit {
           obj = x;
         }
       })
-      console.log(obj)
       if (obj == null) {
         this.service.DeleteSowData(data.sowId).subscribe(res => {
           alert('Data Deleted Successfully');
@@ -435,6 +443,7 @@ export class SOWComponent implements OnInit {
     let datearr = data.split("T")
     return datearr[0];
   }
+
   getAccount(id: any) {
     if (this.accountList && id != null) {
       var obj: any;
@@ -445,8 +454,8 @@ export class SOWComponent implements OnInit {
       })
       return obj.accountName;
     }
-
   }
+
   getTechnology(id: any) {
     if (this.technologyList && id != "") {
       var obj: any;
@@ -457,8 +466,8 @@ export class SOWComponent implements OnInit {
       })
       return obj.technologyName;
     }
-
   }
+
   getLocation(id: any) {
     if (this.locationList && id != "") {
       var obj: any;
@@ -469,8 +478,8 @@ export class SOWComponent implements OnInit {
       })
       return obj.location;
     }
-
   }
+
   getRegion(id: any) {
     if (this.regionList && id != "") {
       var obj: any;
@@ -481,8 +490,8 @@ export class SOWComponent implements OnInit {
       })
       return obj.region;
     }
-
   }
+
   getUSTPOC(id: any) {
     if (this.ustPocList && id != "") {
       var obj: any;
@@ -493,8 +502,8 @@ export class SOWComponent implements OnInit {
       })
       return obj.ustpocName;
     }
-
   }
+
   getUSTTPM(id: any) {
     if (this.ustTpmList && id != "") {
       var obj: any;
@@ -505,8 +514,8 @@ export class SOWComponent implements OnInit {
       })
       return obj.usttpmName;
     }
-
   }
+
   getDellManager(id: any) {
     if (this.dellManagerList && id != "") {
       var obj: any;
@@ -517,8 +526,8 @@ export class SOWComponent implements OnInit {
       })
       return obj.dellManagerName;
     }
-
   }
+
   getStatus(id: any) {
     if (this.statusList && id != "") {
       var obj: any;
@@ -529,10 +538,10 @@ export class SOWComponent implements OnInit {
       })
       return obj.statusName;
     }
-
   }
+
   getRecruiter(id: any) {
-    if (this.recruiterList && id !="") {
+    if (this.recruiterList && id != "") {
       var obj: any;
       this.recruiterList.find((x: any) => {
         if (x.recruiterId == id) {
@@ -541,17 +550,16 @@ export class SOWComponent implements OnInit {
       })
       return obj.recruiterName;
     }
-
   }
 
   download() {
     this.downloadObject = this.createObject(this.SOData)
-    console.log(this.SOData)
     let headers = [['SO Id', 'SO Name', 'JR Code', 'Request Creation Date', 'Account', 'Technology', 'Role', 'Region', 'Location', 'Target Open Positions',
       'Positions Tobe Closed', 'Ust POC', 'Recruiter', 'Ust TPM', 'Dell Manager', 'Status', 'Band', 'Project Id', 'Account Manager', 'External Resource',
       'Internal Resource']]
     this.excelService.jsonExportAsExcel(this.downloadObject, "SO Details", headers);
   }
+
   createObject(data) {
     return {
       'SO Data': data,
@@ -587,9 +595,9 @@ export class SOWComponent implements OnInit {
         }
         this.SOData.push(obj);
       })
-      console.log(this.SOData)
     }
   }
+
   OnPreviousClicked() {
     let startIndex: number = 0;
     let endIndex: number = 0;
@@ -603,6 +611,7 @@ export class SOWComponent implements OnInit {
 
     this.batchRecord = this.SOData.slice(startIndex, endIndex);
   }
+
   OnNextClicked() {
     let startIndex: number = 0;
     let endIndex: number = 0;
@@ -637,6 +646,7 @@ export class SOWComponent implements OnInit {
 
     this.batchRecord = this.SOData.slice(startIndex, endIndex);
   }
+
   SetDefaultPagination() {
     let indexCounter: number = this.currentPage - 1;
     this.pageSizeSelected = 10;
@@ -647,6 +657,7 @@ export class SOWComponent implements OnInit {
       this.batchRecord = this.SOData.slice(startIndex, endIndex);
     }
   }
+
   SetDefaultPaginationForcly(data: any) {
     this.batchFilteredRecord = data;
     let indexCounter: number = this.currentPage - 1;
@@ -657,8 +668,8 @@ export class SOWComponent implements OnInit {
       this.batchRecord = this.batchFilteredRecord.slice(startIndex, endIndex);
     }
   }
+
   searchFilter() {
-    debugger;
     if (this.searchText.trim() == "") {
       this.SetDefaultPaginationForcly(this.SOData)
     }
@@ -668,29 +679,25 @@ export class SOWComponent implements OnInit {
       this.isBatchSearch = true;
       this.SOData.forEach(data => {
         for (let t of Object.keys(data)) {
-          console.log(t)
-          if (!(data[t] == null || data[t]  == undefined)) {
+          if (!(data[t] == null || data[t] == undefined)) {
 
             if (data[t].toString().toLowerCase().includes(this.searchText.toLowerCase())) {
               this.batchRecord.push(data);
-              
+
               break;
             }
-           
           }
         }
-          this.SetDefaultPaginationForcly(this.batchRecord)
-        
+        this.SetDefaultPaginationForcly(this.batchRecord)
       });
     } else {
       this.batchRecord = [];
       this.isBatchSearch = false;
     }
   }
-  onClick(){
-    this.isChecked=false;
-     this.eventChange.emit(this.isChecked);
 
+  onClick() {
+    this.isChecked = false;
+    this.eventChange.emit(this.isChecked);
   }
-
 }    

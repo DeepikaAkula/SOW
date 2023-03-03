@@ -8,6 +8,7 @@ import { CandidatemappingComponent } from './candidatemapping/candidatemapping.c
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DomainComponent } from './domain/domain.component';
 import { LoginComponent } from './login/login.component';
+import { RegistrationComponent } from './registration/registration.component';
 import { SoListComponent } from './so-list/so-list.component';
 import { SOWComponent } from './sow/sow.component';
 import { TechnologyComponent } from './technology/technology.component';
@@ -22,7 +23,8 @@ const routes: Routes = [
   {path:'login',component:LoginComponent},
   {path:'dashboard',component:DashboardComponent,canActivate:[AuthGuard]},
   {path:'soList',component:SoListComponent,canDeactivate:[CanDeactivateGuardService]},
-  {path:'candidateList',component:CandidateListComponent,canDeactivate:[CanDeactivateGuardService]}
+  {path:'candidateList',component:CandidateListComponent,canDeactivate:[CanDeactivateGuardService]},
+  {path:'registartion',component:RegistrationComponent}
 ];
 
 @NgModule({

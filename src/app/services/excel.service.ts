@@ -27,7 +27,6 @@ export class ExcelService {
     let Heading=headers;
     XLSX.utils.sheet_add_aoa(ws, Heading);
     keys.forEach(x => {
-      console.log(x)
       let ar = []
       if (json[x] != null) {
         if (this.isObject(json[x])) {
@@ -44,8 +43,6 @@ export class ExcelService {
             XLSX.utils.book_append_sheet(wb, ws, x);
           }    
         } else {
-          console.log(json[x])
-          console.log(x)
           XLSX.utils.sheet_add_json(ws, json[x], { origin: 'A2', skipHeader: true });
           ws['!cols'] = []
           XLSX.utils.book_append_sheet(wb, ws, x);

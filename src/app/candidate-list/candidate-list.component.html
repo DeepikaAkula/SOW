@@ -1,8 +1,9 @@
 <div class="container" style="margin:5px">
     <h2 class="header" style="margin-right: 550px;">Candidate Details</h2>
-    <button type="button" class="btn-close btn btn-danger " aria-label="Close" style="padding-left: 10px;padding-right: 10px;"(click)="cancel()">X</button>
+    <button type="button" class="btn-close btn btn-danger " aria-label="Close"
+        style="padding-left: 10px;padding-right: 10px;" (click)="cancel()">X</button>
     <div class="container">
-        <form [formGroup]="candidateform"  novalidate>
+        <form [formGroup]="candidateform" novalidate>
             <div class="row">
                 <div class="col-25">
                     <label for="CandidateName">Candidate Name: </label>
@@ -39,11 +40,12 @@
                         placeholder="Enter mobileNo" required>
                     <div *ngIf="(f.mobileNo.touched || submitted) && f.mobileNo.invalid" class="text-danger">
                         <div *ngIf="f.mobileNo.errors.required">Mobile Number is required.</div>
-                        <div *ngIf="(f.mobileNo.touched && f.mobileNo.invalid && (f.mobileNo.errors.minlength || f.mobileNo.errors.maxlength || f.mobileNo.errors?.pattern))">
+                        <div
+                            *ngIf="(f.mobileNo.touched && f.mobileNo.invalid && (f.mobileNo.errors.minlength || f.mobileNo.errors.maxlength || f.mobileNo.errors?.pattern))">
                             Mobile Number is incorrect.</div>
-                        
+
                     </div>
-                    
+
                 </div>
             </div>
             <div class="row">
@@ -130,11 +132,12 @@
                 <div class="col-75">
                     <textarea id="address" name="address" placeholder="Enter address" formControlName="address"
                         style="height:200px"></textarea>
-                        <div *ngIf="(candidateform.controls['address'].invalid && candidateform.controls['address'].touched) || submitted && f.address.errors" class="text-danger">
-                            <div *ngIf="candidateform.controls['address'].errors.required || submitted && f.address.errors">
-                                Address is required
-                            </div>
+                    <div *ngIf="(candidateform.controls['address'].invalid && candidateform.controls['address'].touched) || submitted && f.address.errors"
+                        class="text-danger">
+                        <div *ngIf="candidateform.controls['address'].errors.required || submitted && f.address.errors">
+                            Address is required
                         </div>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -144,18 +147,20 @@
                 <div class="col-75">
                     <input type="text" id="pincode" name="pincode" formControlName="pincode" placeholder="Enter pincode"
                         required>
-                        <div *ngIf="(candidateform.controls['pincode'].invalid && candidateform.controls['pincode'].touched) || submitted && f.pincode.errors" class="text-danger">
-                            <div *ngIf="candidateform.controls['pincode'].errors.required || submitted && f.pincode.errors">
-                                Pincode is required
-                            </div>
-                            <div *ngIf="candidateform.controls['pincode'].errors.minlength || candidateform.controls['pincode'].errors.maxlength">
+                    <div *ngIf="(candidateform.controls['pincode'].invalid && candidateform.controls['pincode'].touched) || submitted && f.pincode.errors"
+                        class="text-danger">
+                        <div *ngIf="candidateform.controls['pincode'].errors.required || submitted && f.pincode.errors">
+                            Pincode is required
+                        </div>
+                        <div
+                            *ngIf="candidateform.controls['pincode'].errors.minlength || candidateform.controls['pincode'].errors.maxlength">
                             Pincode is incorrect.
-                            
-                            </div>
-                             <div *ngIf="candidateform.controls['pincode'].errors.pattern">
+
+                        </div>
+                        <div *ngIf="candidateform.controls['pincode'].errors.pattern">
                             Pincode Pattern mismatch.
-                            </div>
-                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -170,7 +175,7 @@
             <br>
             <div class="row">
                 <button type="submit" class="btn btn-success" (click)="onSubmit()">Submit</button>
-                <button  class="btn btn-danger" (click)="cancel()">Cancel</button>
+                <button class="btn btn-danger" (click)="cancel()">Cancel</button>
             </div>
         </form>
     </div>

@@ -36,52 +36,36 @@
             </div>
         </form>
     </div>
-    <div class="container">
-        <div style="flex-grow: 1; text-align: left; margin-bottom: 10px;display: inline;">
-            <input style="width:200px;height:30px;margin-right: 10px;margin-left:65%;" type="text" maxlength="256"
+    <div style="flex-grow: 1; text-align: left; margin-bottom: 10px;display: inline;">
+        <input style="width:200px;height:30px;margin-right: 10px;margin-left:65%;" type="text" maxlength="256"
             [(ngModel)]="searchText" (keyup)="searchFilter()" placeholder="Search by any column">
-           <button (click)="download();" title="Download to Excel">
-           <img src="../../assets/icons/download.png" class="icons" alt="Download">
-          </button>
-        </div>
+        <button (click)="download();" title="Download to Excel">
+            <img src="../../assets/icons/download.png" class="icons" alt="Download">
+        </button>
+    </div>
+    <div class="container">
         <div class="row tbl-fixed">
-           
-            <table class="table table-fixed" *ngIf="isAuthor">
+            <table class="table table-fixed">
                 <thead>
-                    <th style="border: 1px solid;">Technology Id</th>
-                    <th style="border: 1px solid;">Technology Name</th>
-                    <th style="border: 1px solid;">Domain</th>
-                    <th style="border: 1px solid;">Actions</th>
+                    <th class="tableborder">Technology Id</th>
+                    <th class="tableborder">Technology Name</th>
+                    <th class="tableborder">Domain</th>
+                    <th class="tableborder" *ngIf="isAuthor">Actions</th>
                 </thead>
                 <tbody>
                     <tr *ngFor="let tech of batchRecord">
-                        <td style="border: 1px solid;">{{tech.technologyId}}</td>
-                        <td style="border: 1px solid;">{{tech.technologyName}}</td>
-                        <td style="border: 1px solid;">{{tech.domainName}}</td>
-                        <td style="border: 1px solid;">
+                        <td class="tableborder">{{tech.technologyId}}</td>
+                        <td class="tableborder">{{tech.technologyName}}</td>
+                        <td class="tableborder">{{tech.domainName}}</td>
+                        <td class="tableborder" *ngIf="isAuthor">
                             <button (click)="editDetails(tech)"><img src="../../assets/icons/edit.ico"
                                     class="icons"></button> &nbsp;
-                            <!-- <button (click)="deleteDetails(tech)"><img src="../../assets/icons/delete.png"
-                            class="icons" /></button> -->
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <table class="table table-fixed" *ngIf="!isAuthor">
-                <thead>
-                    <th style="border: 1px solid;">Technology Id</th>
-                    <th style="border: 1px solid;">Technology Name</th>
-                    <th style="border: 1px solid;">Domain</th>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let tech of batchRecord">
-                        <td style="border: 1px solid;">{{tech.technologyId}}</td>
-                        <td style="border: 1px solid;">{{tech.technologyName}}</td>
-                        <td style="border: 1px solid;">{{tech.domainName}}</td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
+        <p>Row Count: {{rowCount}}</p>
         <div class="row justify-content-center" style="margin-top: 10px;">
             <nav>
                 <ul class="pagination justify-content-center">

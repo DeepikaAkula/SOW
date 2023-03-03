@@ -1,5 +1,5 @@
-
 <div class="row">
-    <div [ngClass]="headerEvent?'col-md-3':'col-md-0'"><app-header (eventChange)="update($event)"></app-header></div> <!-- 25% -->
+    <div [ngClass]="headerEvent?'col-md-3':'col-md-0'"><app-header (eventChange)="update($event)"></app-header></div>
+    <!-- 25% -->
     <div [ngClass]="headerEvent?'col-md-9':'col-md-12'"><router-outlet></router-outlet></div> <!-- 75% -->
 </div>

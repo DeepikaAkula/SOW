@@ -11,6 +11,7 @@ import { LoginService } from '../services/login.service';
   templateUrl: './candidate-details.component.html',
   styleUrls: ['./candidate-details.component.css']
 })
+
 export class CandidateDetailsComponent implements OnInit {
   CandidateList: any = [];
   model: any = {};
@@ -23,22 +24,22 @@ export class CandidateDetailsComponent implements OnInit {
   currentPage: number = 1;
   pageSizeSelected: number = 10;
   batchRecord: any = [];
-  resultloader:boolean=false;
-  isAuthor:boolean=false;
+  resultloader: boolean = false;
+  isAuthor: boolean = false;
   candidate: any;
   searchText: any;
   isBatchSearch: boolean;
   batchFilteredRecord: any;
   rowCount: any;
-  constructor(private service: CandidateService, 
-    private mappingService: CandidatemappingService, 
-    private excelService: ExcelService, 
+
+  constructor(private service: CandidateService,
+    private mappingService: CandidatemappingService,
+    private excelService: ExcelService,
     public formBuilder: FormBuilder,
-    private login:LoginService,
-    private router: Router) { 
-    
+    private login: LoginService,
+    private router: Router) {
   }
-  
+
   candidateform = new FormGroup({
     candidateName: new FormControl('', [Validators.required]),
     dob: new FormControl('', [Validators.required]),
@@ -51,29 +52,29 @@ export class CandidateDetailsComponent implements OnInit {
     skills: new FormControl('', [Validators.required]),
     location: new FormControl('', [Validators.required]),
     address: new FormControl('', [Validators.required]),
-    pincode: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(6),Validators.pattern("[0-9]")]),
+    pincode: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(6), Validators.pattern("[0-9]")]),
     isInternal: new FormControl(),
   })
-  ngOnInit(): void {  
-    this.isAuthor=JSON.parse(sessionStorage.getItem('author'));
-    this.GetCandidateData(); 
+
+  ngOnInit(): void {
+    this.isAuthor = JSON.parse(sessionStorage.getItem('author'));
+    this.GetCandidateData();
   }
 
   get f() { return this.candidateform.controls; }
 
   GetCandidateData() {
-    this.resultloader=true;
+    this.resultloader = true;
     this.mappingService.GetAllCandidateMappingData().subscribe(res => {
       this.mappinglst = res;
-      console.log(this.mappinglst[0].sowId)
-      this.resultloader=false;
+      this.resultloader = false;
     },
       err => console.log(err));
-      this.resultloader=true;
-      this.service.GetAllCandidatesData().subscribe(data => {
+    this.resultloader = true;
+    this.service.GetAllCandidatesData().subscribe(data => {
       this.CandidateList = data;
-      this.rowCount=this.CandidateList.length;
-      this.resultloader=false;
+      this.rowCount = this.CandidateList.length;
+      this.resultloader = false;
       this.totalPages = Math.ceil(this.CandidateList.length / this.pageSizeSelected);
       this.SetDefaultPagination();
 
@@ -83,7 +84,6 @@ export class CandidateDetailsComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.candidateform.value);
     this.submitted = true;
     if (this.candidateform.invalid) {
       return;
@@ -130,7 +130,6 @@ export class CandidateDetailsComponent implements OnInit {
     let obj = this.candidateform.value;
     obj.isInternal = (obj.isInternal != true) ? false : true;
     this.service.PostCandidateData(obj).subscribe(data => {
-      console.log(data);
       alert("Candidate Added Successfully");
       this.candidateform.reset();
       this.GetCandidateData();
@@ -138,10 +137,9 @@ export class CandidateDetailsComponent implements OnInit {
   }
 
   editDetails(candidate: any) {
-    this.candidate=candidate.candidateId
+    this.candidate = candidate.candidateId
     this.editmode = true;
-    console.log(candidate);
-    this.router.navigate(['/candidateList'],{queryParams:{editMode:this.editmode,myArray:this.candidate}});
+    this.router.navigate(['/candidateList'], { queryParams: { editMode: this.editmode, myArray: this.candidate } });
     // this.Id = candidate.candidateId;
     // candidate.dob = this.dateTrim(candidate.dob);
     // candidate.joiningDate = this.dateTrim(candidate.joiningDate);
@@ -171,7 +169,6 @@ export class CandidateDetailsComponent implements OnInit {
           obj = x;
         }
       })
-      console.log(obj)
       if (obj == null) {
         this.service.DeleteCandidateData(candidate.candidateId).subscribe(res => {
           alert('Candidate with CandidateId ' + this.Id + 'Deleted Successfully');
@@ -192,13 +189,14 @@ export class CandidateDetailsComponent implements OnInit {
     let datearr = data.split("T")
     return datearr[0];
   }
+
   download() {
     this.downloadObject = this.createObject(this.CandidateList)
-    console.log(this.CandidateList)
     let headers = [['Candidate Id', 'Candidate Name', 'Mobile No', 'Gender', 'DOB', 'Email', 'Location', 'Skills', 'Joining Date', 'Address',
       'Status', 'Pincode', 'isInternal']]
     this.excelService.jsonExportAsExcel(this.downloadObject, "Candidate Details", headers);
   }
+
   createObject(data) {
     return {
       'Candidate Data': data,
@@ -218,6 +216,7 @@ export class CandidateDetailsComponent implements OnInit {
 
     this.batchRecord = this.CandidateList.slice(startIndex, endIndex);
   }
+
   OnNextClicked() {
     let startIndex: number = 0;
     let endIndex: number = 0;
@@ -252,6 +251,7 @@ export class CandidateDetailsComponent implements OnInit {
 
     this.batchRecord = this.CandidateList.slice(startIndex, endIndex);
   }
+
   SetDefaultPagination() {
     let indexCounter: number = this.currentPage - 1;
 
@@ -261,43 +261,40 @@ export class CandidateDetailsComponent implements OnInit {
       this.batchRecord = this.CandidateList.slice(startIndex, endIndex);
     }
   }
-  
-searchFilter() {
- 
-   if (this.searchText.trim() == "") {
-  this.SetDefaultPaginationForcly(this.CandidateList)
-   }
-   else if (this.searchText != undefined || this.searchText != "") {
-   this.isBatchSearch = true;
-   this.batchRecord = [];
-   this.isBatchSearch = true;
-  this.CandidateList.forEach(data => {
-   for (let t of Object.keys(data)) {
-   console.log(t)
-   if (!(data[t] == null || data[t]  == undefined)) {
-     if (data[t].toString().toLowerCase().includes(this.searchText.toLowerCase())) {
-   this.batchRecord.push(data);
- break;
- }
-   }
+
+  searchFilter() {
+    if (this.searchText.trim() == "") {
+      this.SetDefaultPaginationForcly(this.CandidateList)
+    }
+    else if (this.searchText != undefined || this.searchText != "") {
+      this.isBatchSearch = true;
+      this.batchRecord = [];
+      this.isBatchSearch = true;
+      this.CandidateList.forEach(data => {
+        for (let t of Object.keys(data)) {
+          if (!(data[t] == null || data[t] == undefined)) {
+            if (data[t].toString().toLowerCase().includes(this.searchText.toLowerCase())) {
+              this.batchRecord.push(data);
+              break;
+            }
+          }
+        }
+        this.SetDefaultPaginationForcly(this.batchRecord)
+      });
+    } else {
+      this.batchRecord = [];
+      this.isBatchSearch = false;
+    }
+    this.SetDefaultPaginationForcly(this.batchRecord)
   }
-  this.SetDefaultPaginationForcly(this.batchRecord)
-   });
-  } else {
-   this.batchRecord = [];
-  this.isBatchSearch = false;
-   }
-   this.SetDefaultPaginationForcly(this.batchRecord)
-}
-SetDefaultPaginationForcly(data: any) {
-   this.batchFilteredRecord = data;
-  let indexCounter: number = this.currentPage - 1;
-   let startIndex: number = indexCounter * Number(this.pageSizeSelected);
-   let endIndex: number = Number(this.pageSizeSelected) + startIndex;
-   if (this.batchFilteredRecord) {
-  this.batchRecord = this.batchFilteredRecord.slice(startIndex, endIndex);
+
+  SetDefaultPaginationForcly(data: any) {
+    this.batchFilteredRecord = data;
+    let indexCounter: number = this.currentPage - 1;
+    let startIndex: number = indexCounter * Number(this.pageSizeSelected);
+    let endIndex: number = Number(this.pageSizeSelected) + startIndex;
+    if (this.batchFilteredRecord) {
+      this.batchRecord = this.batchFilteredRecord.slice(startIndex, endIndex);
+    }
   }
-   }
-  
-  
 }

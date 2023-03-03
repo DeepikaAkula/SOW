@@ -5,15 +5,14 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
   title = 'CandidateProfiles';
-  headerEvent:boolean=true;
+  headerEvent: boolean = true;
 
-  update(event:any){
-    console.log(event)
-    this.headerEvent=event;
+  update(event: any) {
+    this.headerEvent = event;
   }
-  
 }
 
 

@@ -6,34 +6,33 @@ import { AuthService } from "../services/auth.service";
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-    constructor(private _authService: AuthService, private _router: Router,private commonServ:CommonService) { }
+    constructor(private _authService: AuthService, private _router: Router, private commonServ: CommonService) { }
+
     data = sessionStorage.getItem('userData');
     userInfo = (this.data) ? JSON.parse(this.data) : null;
     canActivate(route: ActivatedRouteSnapshot): boolean {
         if (this._authService.loggedIn()) {
-            console.log(route);          
             return this.checkforUserAccess(route);
         } else {
             this._router.navigate(['/login'])
             return false
         }
     }
+
     checkforUserAccess(_route: ActivatedRouteSnapshot) {
-        if(_route.routeConfig?.path?.toString()==='dashboard'){
+        if (_route.routeConfig?.path?.toString() === 'dashboard') {
             this.commonServ.loadComponent(true);
             return true;
-        } 
-        else{
-            const screens = this.userInfo.ScreenNames.split(',');  
-            console.log(screens);
-            for(let ele in screens){
-                if(screens[ele].toLowerCase()===_route.routeConfig?.path?.toString()){
-                    console.log('login item');
+        }
+        else {
+            const screens = this.userInfo.ScreenNames.split(',');
+            for (let ele in screens) {
+                if (screens[ele].toLowerCase() === _route.routeConfig?.path?.toString()) {
                     this.commonServ.loadComponent(true);
                     return true;
                 }
             }
-        }   
+        }
         return false;
     }
 }

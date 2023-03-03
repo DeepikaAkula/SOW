@@ -30,10 +30,7 @@ textarea {
   padding: 1px 1px 1px 1px ;
 }
 
-select{
-  height: 40px;
-  padding: 1px 1px 1px 1px ;
-}
+
 label {
   /* padding: 12px 12px 12px 0; */
   display: inline-block;
@@ -48,6 +45,8 @@ button[type=submit] {
   cursor: pointer;
   float: right;
 }
+
+
 
 .container {
   border-radius: 5px;
@@ -96,6 +95,7 @@ button[type=submit] {
   overflow-y: scroll;
   height: fit-content;
   max-height: 200px;
+
 }
 
 table {
@@ -115,4 +115,12 @@ table th {
 table td {
   text-align: center;
   padding: 1px 1px 1px 1px;
+}
+select{
+  height: 40px;
+  padding: 1px 1px 1px 1px ;
+}
+label {
+  /* padding: 12px 12px 12px 0; */
+  display: inline-block;
 }

@@ -4,8 +4,8 @@
     border-collapse: collapse;
 }
 .icons{
-  height: 20px;
-  width: 25px;
+    height:20px;
+    width:25px;
 }
 
 .buttons{
@@ -19,19 +19,19 @@
   
   input[type=text], select, textarea {
     width: 100%;
-    padding: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
     resize: vertical;
+    height: 40px;
+    padding: 1px 1px 1px 1px ;
   }
   
   label {
-    padding: 12px 12px 12px 0;
+    /* padding: 12px 12px 12px 0; */
     display: inline-block;
   }
   
   button[type=submit] {
-   
     color: white;
     padding: 12px 20px;
     border: none;
@@ -40,14 +40,14 @@
     float: right;
   }
   
-  button[type=submit]:hover {
+  /* button[type=submit]:hover {
     background-color: #45a049;
-  }
+  } */
   
   .container {
     border-radius: 5px;
     background-color: #f2f2f2;
-    padding: 20px;
+    padding: 10px;
   }
   
   .col-25 {
@@ -91,8 +91,9 @@
     
   }
   table{
-    min-width: min-content;
+    min-width: max-content;
     border-collapse:separate;
+    margin-top: 5px;
   }
   table th{
     position: sticky;
@@ -103,4 +104,5 @@
   }
   table td{
     text-align: center;
+    padding: 1px 1px 1px 1px;
   }
