@@ -16,8 +16,8 @@ export class HeaderComponent implements OnInit {
   dashboard: boolean = false;
   header: boolean = false;
   public isChecked = true;
-  @Output() eventChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   registration:boolean=false;
+  @Output() eventChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(private commonServ: CommonService) { }
 
@@ -29,24 +29,18 @@ export class HeaderComponent implements OnInit {
       }
     });
     this.commonServ.loadMessage.subscribe(data => {
-      debugger;
-      console.log(data);
       if (data) {
         if (sessionStorage.getItem('userData') != null || sessionStorage.getItem('userData') != undefined) {
           this.header = true;
           this.dashboard = true;
           this.login = true;
-          let userData = sessionStorage.getItem('userData');
-          let resData = (userData) ? JSON.parse(userData) : null;
-          console.log(resData);
+          let data = sessionStorage.getItem('userData');
+          let resData = (data) ? JSON.parse(data) : null;
           let ScreenNames = resData.ScreenNames.split(',');
           if (sessionStorage.getItem('toggle') != null || sessionStorage.getItem('toggle') != undefined) {
             let obj = sessionStorage.getItem('toggle');
-            
             let objData = (obj) ? JSON.parse(obj) : null;
-            console.log(objData);
             for (let key of Object.keys(objData)) {
-              
               if (key == 'sow') {
                 this.sow = objData.sow;
               }
@@ -88,7 +82,7 @@ export class HeaderComponent implements OnInit {
                 this.registration=true;
               }
             }
-            let obj = { sow: this.sow, candidatedetails: this.candidatedetails, mapping: this.mapping, domain: this.domain, technology: this.technology,registration:this.registration }
+            let obj = { sow: this.sow, candidatedetails: this.candidatedetails, mapping: this.mapping, domain: this.domain, technology: this.technology,registration:this.registration  }
             sessionStorage.setItem('toggle', JSON.stringify(obj))
           }
         }

@@ -7,23 +7,32 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class StatusserviceService {
-  apiUrl=environment.apiUrl;
-  baseUrl: string =this.apiUrl+ "/Status";
+  apiUrl = environment.apiUrl;
+  baseUrl: string = this.apiUrl + "/Status";
   constructor(private http: HttpClient) { }
 
   GetAllStatusData(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}`);
   }
+
   PostStatusData(data: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}`,data );
+    return this.http.post<any>(`${this.baseUrl}`, data);
   }
+
   DeleteStatusData(id: any): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}/${id}`);
   }
+
   UpdateStatusData(id: any, data: any): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/${id}`, data)
   }
-  GetStatusById(id:any):Observable<any>{
+
+  GetStatusById(id: any): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/${id}`)
   }
+
+  GetStatusByType(statusTypeId: Number): Observable<any> {
+    return this.http.get<any>(this.baseUrl + "/GetStatusByType?id=" + statusTypeId);
+  }
+
 }

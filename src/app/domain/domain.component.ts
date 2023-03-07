@@ -27,6 +27,7 @@ export class DomainComponent implements OnInit {
   searchText: any;
   batchFilteredRecord: any;
   rowCount: Number;
+  prevDomainName: any;
 
   constructor(private service: DomainService, private excelService: ExcelService, private loginservice: LoginService) {
     //this.isAuthor = this.loginservice.isAuthor;
@@ -64,21 +65,36 @@ export class DomainComponent implements OnInit {
       return;
     }
 
+    if (this.editmode) {
+      if (!this.isDuplicate(true)) {
+        this.onEdit();
+      }
+    }
+    else {
+      if (!this.isDuplicate(false)) {
+        this.onAdd();
+      }
+    }
+  }
+
+  isDuplicate(isEdit: boolean) {
+    let checkDuplicate = true;
     let formValue = this.domainForm.value;
     if (formValue != null) {
       let domainName = formValue.domainName;
-      var result = this.DomainList.find(item => item.domainName.trim().toLowerCase() === domainName.trim().toLowerCase());
-      if (result != null) {
-        return alert('Duplicate record -"' + domainName + '" already exists');
+      if (isEdit && this.prevDomainName.trim().toLowerCase() === domainName.trim().toLowerCase()) {
+        checkDuplicate = false;
+      }
+
+      if (checkDuplicate) {
+        var result = this.DomainList.find(item => item.domainName.trim().toLowerCase() === domainName.trim().toLowerCase());
+        if (result != null) {
+          alert('Duplicate record -"' + domainName + '" already exists');
+          return true;
+        }
       }
     }
-
-    if (this.editmode) {
-      this.onEdit();
-    }
-    else {
-      this.onAdd();
-    }
+    return false;
   }
 
   onEdit() {
@@ -121,6 +137,7 @@ export class DomainComponent implements OnInit {
     this.domainForm.patchValue({
       domainName: data.domainName,
     })
+    this.prevDomainName = data.domainName;
   }
 
   download() {

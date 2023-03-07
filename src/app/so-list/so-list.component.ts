@@ -61,7 +61,8 @@ export class SoListComponent implements OnInit, IDeactivate {
     this.GetDropdown3();
     this.GetDropdown4();
     this.GetDropdown5();
-    this.GetDropdown6();
+    //this.getStatus();
+    this.GetStatusByType();
     this.GetDropdown7();
     this.GetDropdown8();
     this.GetDropdown9();
@@ -258,9 +259,18 @@ export class SoListComponent implements OnInit, IDeactivate {
     })
   }
 
-  GetDropdown6() {
+  getStatus() {
     return new Promise((res, rej) => {
       this.statusService.GetAllStatusData().subscribe(result => {
+        this.statusList = result;
+        res('')
+      })
+    })
+  }
+
+  GetStatusByType() {
+    return new Promise((res, rej) => {
+      this.statusService.GetStatusByType(0).subscribe(result => {
         this.statusList = result;
         res('')
       })

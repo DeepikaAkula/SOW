@@ -68,11 +68,15 @@ export class CandidateDetailsComponent implements OnInit {
     this.mappingService.GetAllCandidateMappingData().subscribe(res => {
       this.mappinglst = res;
       this.resultloader = false;
+      console.log('mappinglst');
+      console.log(this.mappinglst);
     },
       err => console.log(err));
     this.resultloader = true;
     this.service.GetAllCandidatesData().subscribe(data => {
       this.CandidateList = data;
+      console.log('CandidateList');
+      console.log(this.CandidateList);
       this.rowCount = this.CandidateList.length;
       this.resultloader = false;
       this.totalPages = Math.ceil(this.CandidateList.length / this.pageSizeSelected);

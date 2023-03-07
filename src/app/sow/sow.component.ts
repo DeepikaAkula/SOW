@@ -70,16 +70,16 @@ export class SOWComponent implements OnInit {
 
   async ngOnInit() {
     this.isAuthor = JSON.parse(sessionStorage.getItem('author'));
-    await this.GetDropdown1();
-    await this.GetDropdown2();
-    await this.GetDropdown3();
-    await this.GetDropdown4();
-    await this.GetDropdown5();
-    await this.GetDropdown6();
-    await this.GetDropdown7();
-    await this.GetDropdown8();
-    await this.GetDropdown9();
-    await this.GetDropdown10();
+    // await this.GetDropdown1();
+    // await this.GetDropdown2();
+    // await this.GetDropdown3();
+    // await this.GetDropdown4();
+    // await this.GetDropdown5();
+    // await this.GetDropdown6();
+    // await this.GetDropdown7();
+    // await this.GetDropdown8();
+    // await this.GetDropdown9();
+    // await this.GetDropdown10();
     this.GetSowData();
   }
 

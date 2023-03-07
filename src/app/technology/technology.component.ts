@@ -29,6 +29,8 @@ export class TechnologyComponent implements OnInit {
   isBatchSearch: boolean;
   batchFilteredRecord: any;
   rowCount: Number;
+  prevTechnologyName: any;
+  prevDomainId: any;
 
   constructor(private service: TechnologyService, private domainService: DomainService, private excelService: ExcelService, private login: LoginService) {
   }
@@ -48,8 +50,10 @@ export class TechnologyComponent implements OnInit {
   GetAllTechData() {
     this.service.GetAllTechData().subscribe(data => {
       this.TechList = data;
+      this.TechData = data;
+      console.log(data);
       this.rowCount = this.TechList.length;
-      this.GetTechDetails();
+      //this.GetTechDetails();
       this.totalPages = Math.ceil(this.TechList.length / this.pageSizeSelected)
       this.SetDefaultPagination();
     }, err => {
@@ -73,24 +77,40 @@ export class TechnologyComponent implements OnInit {
       return;
     }
 
+    if (this.editmode) {
+      if (!this.isDuplicate(true)) {
+        this.onEdit();
+      }
+    }
+    else {
+      if (!this.isDuplicate(false)) {
+        this.onAdd();
+      }
+    }
+  }
+
+  isDuplicate(isEdit: boolean) {
+    let checkDuplicate = true;
     let formValue = this.techForm.value;
     if (formValue != null) {
       let technologyName = formValue.technologyName;
       let domainId = formValue.domainId;
 
-      var result = this.TechList.find(item => item.technologyName.trim().toLowerCase() === technologyName.trim().toLowerCase()
-        && item.domainId.toString() === domainId);
-      if (result != null) {
-        return alert('Duplicate record -"' + technologyName + '" already exists');
+      if (isEdit && this.prevTechnologyName.trim().toLowerCase() === technologyName.trim().toLowerCase()
+        && this.prevDomainId == domainId) {
+        checkDuplicate = false;
+      }
+
+      if (checkDuplicate) {
+        var result = this.TechList.find(item => item.technologyName.trim().toLowerCase() === technologyName.trim().toLowerCase()
+          && item.domainId.toString() === domainId);
+        if (result != null) {
+          alert('Duplicate record');
+          return true;
+        }
       }
     }
-
-    if (this.editmode) {
-      this.onEdit();
-    }
-    else {
-      this.onAdd();
-    }
+    return false;
   }
 
   onEdit() {
@@ -130,11 +150,15 @@ export class TechnologyComponent implements OnInit {
 
   editDetails(data: any) {
     this.editmode = true;
+    console.log(data);
     this.Id = data.technologyId;
     this.techForm.patchValue({
       technologyName: data.technologyName,
       domainId: data.domainId,
     })
+    this.prevDomainId = data.domainId;
+    this.prevTechnologyName = data.technologyName;
+    console.log(data.domainId);
   }
 
   getDomainName(id: any) {

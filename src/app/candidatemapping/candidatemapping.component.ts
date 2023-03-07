@@ -36,6 +36,8 @@ export class CandidatemappingComponent implements OnInit {
   SOData: SOModel[] = [];
   CandidateData: CandidateModel[] = [];
   StatusData: StatusModel[] = [];
+  prevSowId: any;
+  prevCandidateId: any;
 
   constructor(private service: CandidatemappingService, private candidateService: CandidateService, private sowService: SOWService,
     private statusService: StatusserviceService, private excelService: ExcelService,
@@ -45,8 +47,10 @@ export class CandidatemappingComponent implements OnInit {
   async ngOnInit() {
     await this.GetDropdown1();
     await this.GetDropdown2();
-    await this.GetDropdown3();
+    //await this.GetDropdown3();
+    this.GetStatusByType();
     this.isAuthor = JSON.parse(sessionStorage.getItem('author'));
+    console.log(this.isAuthor)
     this.GetMappingsData();
   }
 
@@ -94,6 +98,16 @@ export class CandidatemappingComponent implements OnInit {
     })
   }
 
+  GetStatusByType() {
+    return new Promise((res, rej) => {
+      this.statusService.GetStatusByType(0).subscribe(result => {
+        this.StatusData = result;
+        res('')
+      })
+    })
+  }
+
+
   // populateDropdowns() {
   //   this.resultloader = true;
   //   this.sowService.GetAllSowData().subscribe(data => {
@@ -124,25 +138,41 @@ export class CandidatemappingComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.mapppingForm.invalid) {
+      console.log('invalid');
       return;
     }
 
+    if (this.editmode) {
+      if (!this.isDuplicate(true)) {
+        this.onEdit();
+      }
+    }
+    else {
+      if (!this.isDuplicate(false)) {
+        this.onAdd();
+      }
+    }
+  }
+
+  isDuplicate(isEdit: boolean) {
     let formValue = this.mapppingForm.value;
+    let checkDuplicate = true;
     if (formValue != null) {
       let sowId = formValue.sowId;
       let candidateId = formValue.candidateId;
-      var result = this.MappingData.find(item => item.sowId == sowId && item.candidateId == candidateId);
-      if (result != null) {
-        return alert('Duplicate record');
+      if (isEdit && this.prevSowId == sowId && this.prevCandidateId == candidateId) {
+        checkDuplicate = false;
+      }
+
+      if (checkDuplicate) {
+        var result = this.MappingData.find(item => item.sowId == sowId && item.candidateId == candidateId);
+        if (result != null) {
+          alert('Duplicate record');
+          return true;
+        }
       }
     }
-
-    if (this.editmode) {
-      this.onEdit();
-    }
-    else {
-      this.onAdd();
-    }
+    return false;
   }
 
   onEdit() {
@@ -168,7 +198,6 @@ export class CandidatemappingComponent implements OnInit {
   }
 
   editDetails(data: any) {
-    console.log(data)
     this.editmode = true;
     this.Id = data.soW_CandidateId;
     this.mapppingForm.patchValue({
@@ -176,6 +205,8 @@ export class CandidatemappingComponent implements OnInit {
       candidateId: data.candidateId,
       statusId: data.statusId,
     })
+    this.prevSowId = data.sowId;
+    this.prevCandidateId = data.candidateId;
   }
 
   onAdd() {

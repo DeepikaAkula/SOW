@@ -80,9 +80,9 @@
                 </div>
                 <div class="col-75">
                     <select id="status" name="status" formControlName="status">
-                        <option value="Joined">Joined</option>
-                        <option value="Canceled">Canceled</option>
-                        <option value="Rejected">Rejected</option>
+                        <option disabled>Select a Status:</option>
+                        <option *ngFor="let status of statusList" value="{{status.statusId}}">{{status.statusName}}
+                        </option>
                     </select>
                     <div *ngIf="(f.status.touched || submitted) && f.status.invalid" class="text-danger">
                         <div *ngIf="f.status.errors.required">Status is required.</div>

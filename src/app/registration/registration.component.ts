@@ -25,11 +25,14 @@ export class RegistrationComponent implements OnInit {
   downloadObject: any;
   resultloader: boolean = false;
   id: any=null;
+  prevUserName: any;
+  prevEmailId: any;
 
   constructor(private service:RegistrationService,private excelService: ExcelService) { }
 
   ngOnInit(): void {
     this.isAuthor = JSON.parse(sessionStorage.getItem('author'));
+    console.log(this.isAuthor)
     this.service.GetRoleData().subscribe(result=>{  
       this.roleName=result  
     })
@@ -55,17 +58,62 @@ export class RegistrationComponent implements OnInit {
   })
   get f() { return this.regForm.controls; }
   onSubmit(){
+    
     this.submitted = true;
     if (this.regForm.invalid) {
       return;
     }
+
     if (this.editMode) {
-      this.onEdit();
+      if (!this.isDuplicate(true)) {
+        this.onEdit();
+      }
     }
     else {
-      this.onAdd();
+      if (!this.isDuplicate(false)) {
+        this.onAdd();
+      }
     }
     
+  }
+  isDuplicate(isEdit: boolean) {
+    debugger;
+    let checkDuplicate = true;
+    let checkDuplicateEmail=false;
+    let formValue = this.regForm.value;
+    if (formValue != null) {
+      let userName = formValue.userName
+      let emailId = formValue.emailId
+      if (isEdit && this.prevUserName.trim().toLowerCase() === userName.trim().toLowerCase()) {
+        checkDuplicate = false;
+      }
+      if(isEdit && this.prevEmailId.trim().toLocaleLowerCase()!=emailId.trim().toLocaleLowerCase()){
+        checkDuplicateEmail = true;
+      }
+
+      if (checkDuplicate) {
+        var userNameExist = this.loginData.find(item => ((item.loginName).toLocaleLowerCase()).trim() ==userName.trim());
+        if (userNameExist != null) {
+          alert('Duplicate record -"' + userName + '" already exists');
+          return true;
+        }
+        var emailExist=this.loginData.find(item=>((item.emailId).toLocaleLowerCase()).trim() == emailId.trim());
+        if(emailExist !=null){
+          alert('Duplicate record -"' + emailId + '" already exists');
+          return true;
+        }
+        
+      }
+      if (checkDuplicateEmail) {
+        var emailExist=this.loginData.find(item=>((item.emailId).toLocaleLowerCase()).trim() == emailId.trim());
+        if(emailExist !=null){
+          alert('Duplicate record -"' + emailId + '" already exists');
+          return true;
+        }
+        
+      }
+    }
+    return false;
   }
   onEdit(){
     let formValue = this.regForm.value;
@@ -115,6 +163,8 @@ export class RegistrationComponent implements OnInit {
       emailId: data.emailId,
       role: data.roleId
     })
+    this.prevUserName=data.loginName;
+    this.prevEmailId=data.emailId
   }
   deleteDetails(data: any) {
     this.id = data.loginId;

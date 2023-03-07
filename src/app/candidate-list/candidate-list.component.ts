@@ -4,7 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { IDeactivate } from '../can-deactivate-guard.service';
 import { CommonService } from '../common.service';
+import { StatusModel } from '../Models/StatusModel';
 import { CandidateService } from '../services/candidate.service';
+import { StatusserviceService } from '../services/statusservice.service';
 
 @Component({
   selector: 'app-candidate-list',
@@ -17,8 +19,10 @@ export class CandidateListComponent implements OnInit, IDeactivate {
   constructor(private service: CandidateService,
     private router: ActivatedRoute,
     private commonServ: CommonService,
-    private route: Router) { }
+    private route: Router,
+    private statusService: StatusserviceService) { }
 
+  statusList: StatusModel[] = [];
   submitted: boolean = false;
   editMode: any = this.router.snapshot.queryParams['editMode']
   editDetails: any = this.router.snapshot.queryParams['myArray'];
@@ -42,7 +46,7 @@ export class CandidateListComponent implements OnInit, IDeactivate {
 
   ngOnInit(): void {
     this.commonServ.headerContent(false);
-
+    this.GetStatusByType();
     if (this.editMode) {
       this.service.GetCandidateById(this.editDetails).subscribe(res => {
         res.map((obj) => {
@@ -142,5 +146,14 @@ export class CandidateListComponent implements OnInit, IDeactivate {
     else {
       return true;
     }
+  }
+
+  GetStatusByType() {
+    return new Promise((res, rej) => {
+      this.statusService.GetStatusByType(1).subscribe(result => {
+        this.statusList = result;
+        res('')
+      })
+    })
   }
 }

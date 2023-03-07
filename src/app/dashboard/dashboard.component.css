@@ -5,32 +5,32 @@ h2 {
 .tabs-container {
   background: #eee;
   list-style-type: none;
-  margin-top: 0px;
-  height: 55px;
+  margin-top: 2px;
+  height: 50px;
   border-bottom: 1px solid #ccc;
-  width: 200%;
+  width: 205%;
 }
 
 .tabs-container .tab-link {
-  width: 33.33%;
+  width: 25%;
   position: relative;
   height: 100%;
-  padding: 10px;
+  padding: 5px;
   float: left;
-  text-align: justify;
+  text-align: left;
 }
 
 .tab-link::after {
   position: absolute;
-  left: 4px;
-  right: 4px;
+  left: 2px;
+  right: 2px;
   bottom: 0;
   display: block;
   content: '';
-  border-bottom: 3px solid #04AA6D;
+  border-bottom: 1px solid #04AA6D;
   color: #18a790;
   transform: scaleX(0);
-  transition: transform 250ms ease-in-out;
+  
 }
 
 .tab-link:hover:after {
@@ -46,13 +46,19 @@ h2 {
 }
 
 .cards_wrap {
-  padding: 1px;
- width: 150%;
+ 
+  width: 150%;
   display: flex;
-  justify-content: space-between;
+  justify-content:space-between;
   flex-wrap: wrap;
-
+  float:auto;
+  
+ 
+ 
+ 
+ 
 }
+
 
 .cards_wrap .card_item {
   padding: 15px 25px;
@@ -61,27 +67,35 @@ h2 {
 }
 
 .cards_wrap .card_inner {
+  
   background: #ccc;
-  border-radius: 5px;
   padding: 2px 2px;
-  min-width: 260px;
-  min-height: 200px;
-  max-height: 200px;
-  width: 60%;
+  min-width: 280px;
+  min-height: 400px;
+  max-height: 250px;
+  width: 10%;
   white-space: nowrap;
+  
   overflow-y: scroll;
+ 
+ 
+  
+  
   height: fit-content;
 }
 
-
-.cards_wrap .card_item .role_name {
-  color: #e36686;
-  font-weight: 900;
-  letter-spacing: 1px;
+.card-header{
+ text-align: center;
   text-transform: uppercase;
-  font-size: 20px;
-  text-align: initial;
+  font-size: 25px;
+  content: fixed;
+  white-space: nowrap;
+  min-width: 280px;
+  width: 10%;
+  background: #ccc;
+
 }
+
 
 ul {
   list-style: none;
@@ -101,9 +115,12 @@ span{
 label{
   white-space: nowrap;
 }
-.card-content{
-  white-space: nowrap;
-  display: inline;
-  overflow: hidden;
-  text-overflow: clip;
+#colonSpan{
+  align-items: center;
+}
+
+
+.cards_wrap .card_inner::-webkit-scrollbar{
+  
+  display: none;
 }

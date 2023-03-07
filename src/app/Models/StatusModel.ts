@@ -1,5 +1,6 @@
 export interface StatusModel{
     statusId: number,
     statusName: string,
-    type: string
+    type: string,
+    statusType: string
   }
