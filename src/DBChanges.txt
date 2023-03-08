@@ -1,0 +1,36 @@
+USE [SOW_Db]
+GO
+/****** Object:  StoredProcedure [dbo].[Registration_proc]    Script Date: 3/8/2023 4:36:53 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER     procedure [dbo].[Registration_proc]  
+(  
+@LoginName nvarchar(50), 
+@LoginPassword nvarchar(100), 
+@EmailId nvarchar(100), 
+@RoleId int, 
+@LoginId int, 
+@Type nvarchar(50)  
+)  
+AS 
+BEGIN IF(@Type='post')  
+BEGIN 
+   INSERT INTO Login(LoginName,LoginPassword,EmailId,RoleId)  VALUES (@LoginName,@LoginPassword,@EmailId,@RoleId);
+END  
+ELSE IF(@Type='get')       
+BEGIN      
+  SELECT RoleId,RoleName FROM roles;     
+END    ELSE IF(@Type='getuser')      
+BEGIN      
+  SELECT  l.LoginId,l.LoginName , l.EmailId, r.RoleName,l.RoleId  FROM login l INNER  JOIN roles r  on L.RoleId = R.RoleId; 
+END   ELSE IF(@Type='update')      
+BEGIN      
+UPDATE Login
+  SET EmailId = @EmailId ,RoleId =@RoleId WHERE LoginId =@LoginId
+END   ELSE IF(@Type='delete')      
+BEGIN      
+    DELETE FROM login WHERE LoginId =@LoginId
+END 
+END
