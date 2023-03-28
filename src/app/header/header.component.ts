@@ -18,6 +18,8 @@ export class HeaderComponent implements OnInit {
   public isChecked = true;
   registration:boolean=false;
   @Output() eventChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  managePw: boolean=false;
+  ChangePW:boolean=false;
 
   constructor(private commonServ: CommonService) { }
 
@@ -29,6 +31,7 @@ export class HeaderComponent implements OnInit {
       }
     });
     this.commonServ.loadMessage.subscribe(data => {
+      
       if (data) {
         if (sessionStorage.getItem('userData') != null || sessionStorage.getItem('userData') != undefined) {
           this.header = true;
@@ -37,9 +40,11 @@ export class HeaderComponent implements OnInit {
           let data = sessionStorage.getItem('userData');
           let resData = (data) ? JSON.parse(data) : null;
           let ScreenNames = resData.ScreenNames.split(',');
+          console.log(ScreenNames);
           if (sessionStorage.getItem('toggle') != null || sessionStorage.getItem('toggle') != undefined) {
             let obj = sessionStorage.getItem('toggle');
             let objData = (obj) ? JSON.parse(obj) : null;
+            console.log(objData);
             for (let key of Object.keys(objData)) {
               if (key == 'sow') {
                 this.sow = objData.sow;
@@ -58,6 +63,9 @@ export class HeaderComponent implements OnInit {
               }
               if(key=='registration'){
                 this.registration=objData.registration;
+              }
+              if(key=='ChangePassword'){
+                this.ChangePW=objData.ChangePassword;
               }
             }
           }
@@ -81,8 +89,12 @@ export class HeaderComponent implements OnInit {
               if(ScreenNames[i].toLowerCase()=='registration'){
                 this.registration=true;
               }
+              if(ScreenNames[i].toLowerCase()=='ChangePassword'){
+                this.ChangePW=true;
+              }
             }
-            let obj = { sow: this.sow, candidatedetails: this.candidatedetails, mapping: this.mapping, domain: this.domain, technology: this.technology,registration:this.registration  }
+            
+            let obj = { sow: this.sow, candidatedetails: this.candidatedetails, mapping: this.mapping, domain: this.domain, technology: this.technology,registration:this.registration,ChangePassword:this.ChangePW }
             sessionStorage.setItem('toggle', JSON.stringify(obj))
           }
         }
@@ -108,10 +120,15 @@ export class HeaderComponent implements OnInit {
     this.login = false;
     this.dashboard = false;
     this.registration=false
+    this.ChangePW=false;
   }
 
   onclick() {
     this.isChecked = false;
     this.eventChange.emit(this.isChecked);
+  }
+  managePassword(){
+    this.managePw=true;
+    console.log(this.managePw)
   }
 }

@@ -36,6 +36,7 @@ import { CanDeactivateGuardService } from './can-deactivate-guard.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardService } from './services/dashboard.service';
 import { RegistrationComponent } from './registration/registration.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { RegistrationComponent } from './registration/registration.component';
     SoListComponent,
     CandidateListComponent,
     RegistrationComponent,
+    ChangePasswordComponent,
 
   ],
   imports: [

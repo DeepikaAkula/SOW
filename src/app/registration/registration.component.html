@@ -51,9 +51,10 @@
     <div style="flex-grow: 1; text-align: right; margin-bottom: 10px; display: inline;">
         <input style="width:200px;height:30px;margin-right: 10px; margin-left:65%;" type="text" maxlength="256"
             [(ngModel)]="searchText" (keyup)="searchFilter()" placeholder="Search by any column">
-        <button (click)="download();" title="Download to Excel">
+        <!-- <button (click)="download();" title="Download to Excel">
             <img src="../../assets/icons/download.png" class="icons" alt="Download">
-        </button>
+        </button> -->
+        <i class="bi bi-file-earmark-arrow-down" (click)="download();" style="font-size:25px;" title="Download to Excel"></i>
     </div>
     <div class="container">
         <div class="row tbl-fixed">
@@ -74,10 +75,15 @@
                         <td class="tableborder">{{map.emailId}}</td>
                         <td class="tableborder">{{map.roleName}}</td>
                         <td class="tableborder" *ngIf="isAuthor">
-                            <button (click)="editDetails(map)"><img src="../../assets/icons/edit.ico"
-                                    class="icons"></button> &nbsp;
-                            <button (click)="deleteDetails(map)"><img src="../../assets/icons/delete.png"
-                                    class="icons" /></button>
+                            <i class="bi bi-pencil-square" (click)="editDetails(map)" title="Edit"></i>&nbsp;
+                            <!-- <button (click)="editDetails(map)"><img src="../../assets/icons/edit.ico"
+                                    class="icons"></button> &nbsp; -->
+                                    <i class="bi bi-trash" (click)="deleteDetails(map)" title="Delete"></i>&nbsp;
+                            <!-- <button (click)="deleteDetails(map)"><img src="../../assets/icons/delete.png"
+                                    class="icons" /></button> -->
+                                    <i *ngIf="lock" class="bi bi-lock"(click)="lockAccount()"></i>
+                                    <i *ngIf="!lock" class="bi bi-unlock"(click)="lockAccount()"></i>&nbsp;
+                                    <i class="bi bi-arrow-repeat" title="Reset" (click)="resetAccount()"></i>
                         </td>
                     </tr>
                 </tbody>

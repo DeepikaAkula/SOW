@@ -27,9 +27,10 @@
     <div style="flex-grow: 1; text-align: left; margin-bottom: 10px;display: inline;">
         <input style="width:200px;height:30px;margin-right: 10px;margin-left:65%;" type="text" maxlength="256"
             [(ngModel)]="searchText" (keyup)="searchFilter()" placeholder="Search by any column">
-        <button (click)="download();" title="Download to Excel">
+        <!-- <button (click)="download();" title="Download to Excel">
             <img src="../../assets/icons/download.png" class="icons" alt="Download">
-        </button>
+        </button> -->
+        <i class="bi bi-file-earmark-arrow-down" (click)="download();" style="font-size:25px;" title="Download to Excel"></i>
     </div>
 
     <div class="container">
@@ -47,8 +48,9 @@
                         <!-- <td class="tableborder">{{domain.domainId}}</td> -->
                         <td class="tableborder">{{domain.domainName}}</td>
                         <td class="tableborder" *ngIf="isAuthor">
-                            <button (click)="editDetails(domain)"><img src="../../assets/icons/edit.ico"
-                                    class="icons"></button> &nbsp;
+                            <i class="bi bi-pencil-square" (click)=" editDetails(domain)" title="Edit"></i>
+                            <!-- <button (click)="editDetails(domain)"><img src="../../assets/icons/edit.ico"
+                                    class="icons"></button> &nbsp; -->
                         </td>
                     </tr>
                 </tbody>

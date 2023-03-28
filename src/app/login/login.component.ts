@@ -43,6 +43,8 @@ export class LoginComponent implements OnInit {
   async checkUserisValid() {
     let formValue = this.loginForm.value;
     let httpParams = new HttpParams().append("loginName", formValue.loginName).append("loginPassword", formValue.loginPassword);
+    sessionStorage.setItem("loginName", formValue.loginName)
+    sessionStorage.setItem("loginPassword", formValue.loginPassword)
     this.resultloader = true;
     await this.service.GetUserData(httpParams).subscribe(res => {
       if (res.Status == 1) {

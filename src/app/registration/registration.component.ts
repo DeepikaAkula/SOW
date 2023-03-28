@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ExcelService } from '../services/excel.service';
+import { LoginService } from '../services/login.service';
 import { RegistrationService } from '../services/registration.service';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-registration',
@@ -27,8 +29,9 @@ export class RegistrationComponent implements OnInit {
   id: any=null;
   prevUserName: any;
   prevEmailId: any;
+  lock: boolean=true;
 
-  constructor(private service:RegistrationService,private excelService: ExcelService) { }
+  constructor(private service:RegistrationService,private excelService: ExcelService,private loginService:LoginService) { }
 
   ngOnInit(): void {
     this.isAuthor = JSON.parse(sessionStorage.getItem('author'));
@@ -284,5 +287,20 @@ export class RegistrationComponent implements OnInit {
       this.isBatchSearch = false;
     }
   }
+  lockAccount(){
+    this.lock=false;
+  }
+resetAccount(){
+  console.log("reset");
+  let obj = {
+    FailureAttempts:0
+  };
+  var loginName=sessionStorage.getItem("loginName");
+  var loginPassword=sessionStorage.getItem("loginPassword")
+  //let httpParams = new HttpParams().append("loginName",loginName).append("loginPassword",loginPassword);
+  this.loginService.PutUserData(loginName,loginPassword,obj).subscribe(result=>{
+    alert("Reset Successfully!");
 
+  })
+}
 }

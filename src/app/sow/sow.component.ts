@@ -81,6 +81,7 @@ export class SOWComponent implements OnInit {
     // await this.GetDropdown9();
     // await this.GetDropdown10();
     this.GetSowData();
+   
   }
 
   SowForm = new FormGroup({
@@ -115,6 +116,7 @@ export class SOWComponent implements OnInit {
       this.rowCount = this.SowList.length;
       this.SOData = [];
       this.SOData = res
+      console.log(this.SOData)
       //  this.GetSODetails();      
       this.resultloader = false;
       this.totalPages = Math.ceil(this.SowList.length / this.pageSizeSelected);

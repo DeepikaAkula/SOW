@@ -14,4 +14,7 @@ export class LoginService {
   GetUserData(httpParams:HttpParams): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}`,{ params: httpParams });
   }
+  PutUserData(loginName,LoginPassword,data): Observable<any> {
+    return this.http.put<any>(this.baseUrl+"/" +loginName+ "?LoginPassword=" + LoginPassword,data);
+  }
 }

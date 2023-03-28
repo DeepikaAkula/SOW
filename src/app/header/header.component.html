@@ -15,8 +15,13 @@
                 (click)="onclick()">Domain</a></li>
         <li *ngIf="technology"><a class="menu__item" routerLink="/technology" routerLinkActive="active"
                 (click)="onclick()">Technology</a></li>
-                <li *ngIf="registration"><a class="menu__item" routerLink="/registration" routerLinkActive="active"
+        <li *ngIf="technology"><a class="menu__item" (click)="managePassword()">Manage Password</a></li>  
+        <ul *ngIf="managePw">   
+        <li *ngIf="registration"><a class="menu__item" routerLink="/registration" routerLinkActive="active"
                         (click)="onclick()">Registration</a></li>
+        <li *ngIf="ChangePW"><a class="menu__item" routerLink="/changePw" routerLinkActive="active"
+                                (click)="onclick()">Change Password</a></li>
+        </ul>  
         <li *ngIf="login"><a class="menu__item" routerLink='/login' (click)="logOut()">LogOut</a></li>
     </ul>
 </div>
