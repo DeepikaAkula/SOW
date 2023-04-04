@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -31,6 +32,9 @@ export class CandidateDetailsComponent implements OnInit {
   isBatchSearch: boolean;
   batchFilteredRecord: any;
   rowCount: any;
+  fromDate: string;
+  endDate: string;
+  startDate:string;
 
   constructor(private service: CandidateService,
     private mappingService: CandidatemappingService,
@@ -194,11 +198,29 @@ export class CandidateDetailsComponent implements OnInit {
     return datearr[0];
   }
 
+  // download() {
+  //   this.downloadObject = this.createObject(this.CandidateList)
+  //   let headers = [['Candidate Id', 'Candidate Name', 'Mobile No', 'Gender', 'DOB', 'Email', 'Location', 'Skills', 'Joining Date', 'Address',
+  //     'Status', 'Pincode', 'isInternal']]
+  //   this.excelService.jsonExportAsExcel(this.downloadObject, "Candidate Details", headers);
+  // }
   download() {
-    this.downloadObject = this.createObject(this.CandidateList)
-    let headers = [['Candidate Id', 'Candidate Name', 'Mobile No', 'Gender', 'DOB', 'Email', 'Location', 'Skills', 'Joining Date', 'Address',
-      'Status', 'Pincode', 'isInternal']]
-    this.excelService.jsonExportAsExcel(this.downloadObject, "Candidate Details", headers);
+    // let downloadList:CandidateModel[]=this.CandidateList.filter( x=> this.compareFromDates(x.joiningDate,this.fromDate) && this.compareToDates(x.joiningDate,this.endDate));
+    this.fromDate = new DatePipe('en-US').transform(this.fromDate, 'yyyy-MM-dd');
+    this.endDate = new DatePipe('en-US').transform(this.endDate, 'yyyy-MM-dd');
+    console.log(this.fromDate+'  '+this.endDate)
+    this.service.GetCandidateByDate(this.fromDate,this.endDate).subscribe((data)=>{
+      if(data!=null || data!=undefined){
+        console.log(data)
+        this.downloadObject = this.createObject(data)
+        let headers = [['Candidate Id', 'Candidate Name', 'Mobile No', 'Gender', 'DOB', 'Email', 'Location', 'Skills', 'Joining Date', 'Address',
+          'Status', 'Pincode', 'isInternal']]
+        this.excelService.jsonExportAsExcel(this.downloadObject, "Candidate Details", headers);
+      }
+      else
+        alert('No Records found!')
+    })
+   
   }
 
   createObject(data) {

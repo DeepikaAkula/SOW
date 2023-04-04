@@ -39,6 +39,8 @@ export class HeaderComponent implements OnInit {
           this.login = true;
           let data = sessionStorage.getItem('userData');
           let resData = (data) ? JSON.parse(data) : null;
+          if(resData.RoleName =='Admin')
+          this.ChangePW=true;
           let ScreenNames = resData.ScreenNames.split(',');
           console.log(ScreenNames);
           if (sessionStorage.getItem('toggle') != null || sessionStorage.getItem('toggle') != undefined) {
@@ -64,9 +66,7 @@ export class HeaderComponent implements OnInit {
               if(key=='registration'){
                 this.registration=objData.registration;
               }
-              if(key=='ChangePassword'){
-                this.ChangePW=objData.ChangePassword;
-              }
+              
             }
           }
           else {
@@ -89,9 +89,7 @@ export class HeaderComponent implements OnInit {
               if(ScreenNames[i].toLowerCase()=='registration'){
                 this.registration=true;
               }
-              if(ScreenNames[i].toLowerCase()=='ChangePassword'){
-                this.ChangePW=true;
-              }
+             
             }
             
             let obj = { sow: this.sow, candidatedetails: this.candidatedetails, mapping: this.mapping, domain: this.domain, technology: this.technology,registration:this.registration,ChangePassword:this.ChangePW }

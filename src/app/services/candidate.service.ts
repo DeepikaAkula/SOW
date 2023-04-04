@@ -26,4 +26,7 @@ export class CandidateService {
   GetCandidateById(id:any):Observable<any>{
     return this.http.get<any>(`${this.baseUrl}/${id}`)
   }
+  GetCandidateByDate(startDate:any,endDate:any):Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}/GetDate?StartDate=${startDate}&EndDate=${endDate}`)
+  }
 }

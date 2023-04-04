@@ -2,10 +2,15 @@
     <h2>SO Details</h2>
 
     <div style="flex-grow: 1; text-align: right; margin-bottom: 10px; display: inline;">
-        <button routerLink="/soList" routerLinkActive="active" class="Add" style="margin-right:60% ;"><span
+        <button routerLink="/soList" routerLinkActive="active" class="Add" style="margin-right:20% ;"><span
                 class="icons" style="padding-right: 3px;padding-bottom:3px;">Add</span> </button>
         <input style="width:200px;height:30px;margin-right: 10px;" type="text" maxlength="256" [(ngModel)]="searchText"
             (keyup)="searchFilter()" placeholder="Search by any column">
+            <label>From Date:</label>
+        <input type="date" style="margin-right: 5px;" [(ngModel)]="fromDate" max="{{this.startDate}}">
+        <label>To Date:</label>
+        <input type="date" style="margin-right: 10px;" [(ngModel)]="endDate" max="{{this.startDate}}"
+            min="{{this.fromDate}}">
         <!-- <button (click)="download();" id="downloadbtn" title="Download to Excel"><img
                 src="../../assets/icons/download.png" class="icons" alt="Download"></button> -->
                 <i class="bi bi-file-earmark-arrow-down" (click)="download();" style="font-size:25px;" title="Download to Excel"></i>

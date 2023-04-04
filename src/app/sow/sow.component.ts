@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -61,6 +62,9 @@ export class SOWComponent implements OnInit {
   batchFilteredRecord: any;
   isChecked: boolean = false;
   @Output() eventChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  fromDate: string | number | Date;
+  endDate: string | number | Date;
+  startDate:string;
 
   constructor(private service: SOWService, private regionService: RegionserviceService, private locationService: LocationserviceService,
     private accountService: AccountserviceService, private tpmService: UsttpmserviceService, private pocService: UstpocserviceService, private recruiterService: RecruiterserviceService,
@@ -554,12 +558,30 @@ export class SOWComponent implements OnInit {
     }
   }
 
+  // download() {
+  //   this.downloadObject = this.createObject(this.SOData)
+  //   let headers = [['SO Id', 'SO Name', 'JR Code', 'Request Creation Date', 'Account', 'Technology', 'Role', 'Region', 'Location', 'Target Open Positions',
+  //     'Positions Tobe Closed', 'Ust POC', 'Recruiter', 'Ust TPM', 'Dell Manager', 'Status', 'Band', 'Project Id', 'Account Manager', 'External Resource',
+  //     'Internal Resource']]
+  //   this.excelService.jsonExportAsExcel(this.downloadObject, "SO Details", headers);
+  // }
   download() {
-    this.downloadObject = this.createObject(this.SOData)
-    let headers = [['SO Id', 'SO Name', 'JR Code', 'Request Creation Date', 'Account', 'Technology', 'Role', 'Region', 'Location', 'Target Open Positions',
-      'Positions Tobe Closed', 'Ust POC', 'Recruiter', 'Ust TPM', 'Dell Manager', 'Status', 'Band', 'Project Id', 'Account Manager', 'External Resource',
-      'Internal Resource']]
-    this.excelService.jsonExportAsExcel(this.downloadObject, "SO Details", headers);
+    // let downloadList:CandidateModel[]=this.CandidateList.filter( x=> this.compareFromDates(x.joiningDate,this.fromDate) && this.compareToDates(x.joiningDate,this.endDate));
+    this.fromDate = new DatePipe('en-US').transform(this.fromDate, 'yyyy-MM-dd');
+    this.endDate = new DatePipe('en-US').transform(this.endDate, 'yyyy-MM-dd');
+    this.service.GetSOByDate(this.fromDate,this.endDate).subscribe((data)=>{
+      if(data!=null || data!=undefined){
+        console.log(data)
+        this.downloadObject = this.createObject(data)
+        let headers = [['SO Id', 'SO Name', 'JR Code', 'Request Creation Date', 'Account', 'Technology', 'Role', 'Region', 'Location', 'Target Open Positions',
+        'Positions Tobe Closed', 'Ust POC', 'Recruiter', 'Ust TPM', 'Dell Manager', 'Status', 'Band', 'Project Id', 'Account Manager', 'External Resource',
+        'Internal Resource']]
+      this.excelService.jsonExportAsExcel(this.downloadObject, "SO Details", headers);
+      }
+      else
+        alert('No Records found!')
+    })
+   
   }
 
   createObject(data) {

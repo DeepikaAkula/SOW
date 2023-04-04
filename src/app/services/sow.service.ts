@@ -25,4 +25,7 @@ export class SOWService {
   GetSowById(id:any):Observable<any>{
     return this.http.get<any>(`${this.baseUrl}/${id}`)
   }
+  GetSOByDate(startDate:any,endDate:any):Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}/GetDate?StartDate=${startDate}&EndDate=${endDate}`)
+  }
 }
