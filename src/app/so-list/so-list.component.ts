@@ -26,6 +26,7 @@ import { TechnologyService } from '../services/technology.service';
 import { UstpocserviceService } from '../services/ustpocservice.service';
 import { UsttpmserviceService } from '../services/usttpmservice.service';
 
+
 @Component({
   selector: 'app-so-list',
   templateUrl: './so-list.component.html',

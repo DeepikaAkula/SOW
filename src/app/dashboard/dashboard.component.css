@@ -1,126 +1,77 @@
 h2 {
   text-align: center;
+  caret-color: transparent; /* Add this line to stop blinking cursor */
 }
-
-.tabs-container {
-  background: #eee;
-  list-style-type: none;
-  margin-top: 2px;
-  height: 50px;
-  border-bottom: 1px solid #ccc;
-  width: 205%;
-}
-
-.tabs-container .tab-link {
-  width: 25%;
-  position: relative;
-  height: 100%;
-  padding: 5px;
-  float: left;
-  text-align: left;
-}
-
-.tab-link::after {
-  position: absolute;
-  left: 2px;
-  right: 2px;
-  bottom: 0;
-  display: block;
-  content: '';
-  border-bottom: 1px solid #04AA6D;
-  color: #18a790;
-  transform: scaleX(0);
-  
-}
-
-.tab-link:hover:after {
-  transform: scaleX(1);
-}
-
-.active::after {
-  transform: scaleX(1);
-}
-
-.active {
-  color: #04AA6D !important;
+.container {
+  caret-color: transparent; /* Add this line to stop blinking cursor */
 }
 
 .cards_wrap {
- 
-  width: 150%;
+  width: 200%;
   display: flex;
-  justify-content:space-between;
+  justify-content: space-evenly;
   flex-wrap: wrap;
-  float:auto;
-  
- 
- 
- 
- 
-}
-
-
-.cards_wrap .card_item {
-  padding: 15px 25px;
-  width: 2%;
-
+  float: auto;
 }
 
 .cards_wrap .card_inner {
-  
-  background: #ccc;
+  background: #cccccc00;
   padding: 2px 2px;
   min-width: 280px;
   min-height: 400px;
   max-height: 250px;
   width: 10%;
   white-space: nowrap;
-  
   overflow-y: scroll;
- 
- 
-  
-  
   height: fit-content;
+  border: solid 1px black;
 }
 
-.card-header{
- text-align: center;
+.card-header {
+  text-align: center;
   text-transform: uppercase;
   font-size: 25px;
   content: fixed;
   white-space: nowrap;
   min-width: 280px;
   width: 10%;
-  background: #ccc;
-
-}
-
-
-ul {
-  list-style: none;
-  margin-top: 5px;
-  margin-left: 2px;
+  background: #cccccccf;
+  border: solid 1px black;
 }
 
 .dropdown {
   background-color: #ccc;
   border-radius: 2px;
+  cursor: pointer;
 }
-span{
-  float: right; 
+span {
+  float: right;
   margin-right: 5px;
   white-space: nowrap;
 }
-label{
+label {
   white-space: nowrap;
 }
-#colonSpan{
+#colonSpan {
   align-items: center;
 }
-
-
-.cards_wrap .card_inner::-webkit-scrollbar{
-  
+.cards_wrap .card_inner::-webkit-scrollbar {
   display: none;
+}
+.card_item {
+  flex-basis: calc(33.33% - 20px);
+  margin: 10px;
+}
+.card-content:hover {
+  background-color: #cccccc4d;
+}
+
+@media screen and (max-width: 768px) {
+  .cards_wrap {
+    flex-direction: column;
+  }
+
+  .card_item {
+    flex-basis: calc(100% - 20px);
+  }
 }

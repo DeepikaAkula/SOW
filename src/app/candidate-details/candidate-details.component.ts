@@ -14,6 +14,7 @@ import { LoginService } from '../services/login.service';
 })
 
 export class CandidateDetailsComponent implements OnInit {
+  
   CandidateList: any = [];
   model: any = {};
   submitted: boolean = false;
@@ -35,6 +36,8 @@ export class CandidateDetailsComponent implements OnInit {
   fromDate: string;
   endDate: string;
   startDate:string;
+  nextInterval: any;
+  previousInterval: any;
 
   constructor(private service: CandidateService,
     private mappingService: CandidatemappingService,
@@ -66,7 +69,33 @@ export class CandidateDetailsComponent implements OnInit {
   }
 
   get f() { return this.candidateform.controls; }
-
+  OnNextHeld() {
+    this.nextInterval = setInterval(() => {
+      if (this.currentPage < this.totalPages) {
+        this.OnNextClicked();
+      } else {
+        clearInterval(this.nextInterval);
+      }
+    }, 200);
+  }
+  
+  OnNextReleased() {
+    clearInterval(this.nextInterval);
+  }
+  
+  OnPreviousHeld() {
+    this.previousInterval = setInterval(() => {
+      if (this.currentPage > 1) {
+        this.OnPreviousClicked();
+      } else {
+        clearInterval(this.previousInterval);
+      }
+    }, 200);
+  }
+  
+  OnPreviousReleased() {
+    clearInterval(this.previousInterval);
+  }
   GetCandidateData() {
     this.resultloader = true;
     this.mappingService.GetAllCandidateMappingData().subscribe(res => {

@@ -1,21 +1,19 @@
-import { Injectable } from '@angular/core';
-import { LoginService } from './login.service';
+import { Injectable } from "@angular/core";
+import { LoginService } from "./login.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthService {
+  constructor(service: LoginService) {}
+  //data = sessionStorage.getItem("userData");
+  // userInfo = this.data ? JSON.parse(this.data) : null;
 
-  constructor(service:LoginService) { }
-  data=sessionStorage.getItem('userData');
-  userInfo=(this.data)?JSON.parse(this.data):null;
-
-  loggedIn(){
-    if(this.userInfo!=null){
+  loggedIn() {
+    let data = sessionStorage.getItem("userData");
+    let userInfo = data ? JSON.parse(data) : null;
+    if (userInfo != null) {
       return true;
-    }
-    else
-    return false;
+    } else return false;
   }
-  
 }

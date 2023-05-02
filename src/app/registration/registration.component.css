@@ -19,7 +19,7 @@
   box-sizing: border-box;
 }
 
-input[type=text],
+input[type="text"],
 select,
 textarea {
   width: 100%;
@@ -27,16 +27,15 @@ textarea {
   border-radius: 4px;
   resize: vertical;
   height: 40px;
-  padding: 1px 1px 1px 1px ;
+  padding: 1px 1px 1px 1px;
 }
-
 
 label {
   /* padding: 12px 12px 12px 0; */
   display: inline-block;
 }
 
-button[type=submit] {
+button[type="submit"] {
   /* background-color: #04AA6D; */
   color: white;
   padding: 12px 20px;
@@ -46,12 +45,11 @@ button[type=submit] {
   float: right;
 }
 
-
-
 .container {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 10px;
+  margin-right: 0px;
 }
 
 .col-25 {
@@ -75,10 +73,9 @@ button[type=submit] {
 
 /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
-
   .col-25,
   .col-75,
-  input[type=submit] {
+  input[type="submit"] {
     width: 100%;
     margin-top: 0;
   }
@@ -95,7 +92,6 @@ button[type=submit] {
   overflow-y: scroll;
   height: fit-content;
   max-height: 200px;
-
 }
 
 table {
@@ -116,9 +112,9 @@ table td {
   text-align: center;
   padding: 1px 1px 1px 1px;
 }
-select{
+select {
   height: 40px;
-  padding: 1px 1px 1px 1px ;
+  padding: 1px 1px 1px 1px;
 }
 label {
   /* padding: 12px 12px 12px 0; */

@@ -1,0 +1,17 @@
+<div class="row justify-content-center" style="margin-top: 10px;">
+    <nav>
+        <ul class="pagination justify-content-center">
+            <li class="page-item"><button class="btn btn-info" (click)="OnPreviousClicked()"
+                    [disabled]="!(currentPage > 1)">Previous</button></li>
+                    <li class="page-item active">
+                        <label style="margin-left:10px">Page</label>
+                        <input type="number" style="width: 3.2rem; height: 1.9rem;margin-right: 5px;"
+                               [value]="totalPages === 0 ? 0 : currentPage" [min]="totalPages === 0 ? 0 : 1"
+                               (change)="OnPageNumberChanged($event)" [max]="totalPages">
+                        <label>of {{totalPages}}</label>
+                      </li>
+            <li class="page-item"><button class="btn btn-info"  (click)="OnNextClicked()"
+                    [disabled]="(currentPage == totalPages)">Next</button></li>
+        </ul>
+    </nav>
+</div>

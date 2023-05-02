@@ -30,6 +30,8 @@ export class RegistrationComponent implements OnInit {
   prevUserName: any;
   prevEmailId: any;
   lock: boolean=true;
+  nextInterval: any;
+  previousInterval: any;
 
   constructor(private service:RegistrationService,private excelService: ExcelService,private loginService:LoginService) { }
 
@@ -192,6 +194,33 @@ export class RegistrationComponent implements OnInit {
     return {
       'SOCandidate Mapping Data': data,
     }
+  }
+  OnNextHeld() {
+    this.nextInterval = setInterval(() => {
+      if (this.currentPage < this.totalPages) {
+        this.OnNextClicked();
+      } else {
+        clearInterval(this.nextInterval);
+      }
+    }, 200);
+  }
+  
+  OnNextReleased() {
+    clearInterval(this.nextInterval);
+  }
+  
+  OnPreviousHeld() {
+    this.previousInterval = setInterval(() => {
+      if (this.currentPage > 1) {
+        this.OnPreviousClicked();
+      } else {
+        clearInterval(this.previousInterval);
+      }
+    }, 200);
+  }
+  
+  OnPreviousReleased() {
+    clearInterval(this.previousInterval);
   }
   OnPreviousClicked() {
     let startIndex: number = 0;

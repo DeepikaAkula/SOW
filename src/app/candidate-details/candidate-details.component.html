@@ -2,22 +2,53 @@
     <h2>Candidate Details</h2>
    
 
-    <div style="flex-grow: 1; text-align: right; margin-bottom: 10px; display: inline;">
-        <button routerLink="/candidateList" routerLinkActive="active" class="Add" style="margin-right:20% ;">
-            <span class="icons" style="padding-right: 3px;padding-bottom:3px;">Add</span>
-        </button>
-        <input style="width:200px;height:30px;margin-right: 10px;" type="text" maxlength="256" [(ngModel)]="searchText"
-            (keyup)="searchFilter()" placeholder="Search by any column">
-            <label>From Date:</label>
-            <input type="date" style="margin-right: 5px;" [(ngModel)]="fromDate" max="{{this.startDate}}">
-            <label>To Date:</label>
-            <input type="date" style="margin-right: 10px;" [(ngModel)]="endDate" max="{{this.startDate}}" min="{{this.fromDate}}">
-            <i class="bi bi-file-earmark-arrow-down" (click)="download();" style="font-size:25px;" title="Download to Excel"></i>
-        <!-- <button (click)="download();" title="Download to Excel">
-            <img src="../../assets/icons/download.png" class="icons" alt="Download">
-        </button> -->
-    </div>
+    <div class="row">
+        <div class="col-md-3 mb-3">
+          <button routerLink="/candidateList" routerLinkActive="active" class="btn btn-primary">
+            <span class="icons me-1">Add</span>
+          </button>
+        </div>
+        <div class="col-md-3 mb-3">
+          <input type="text" class="form-control me-3" maxlength="256" [(ngModel)]="searchText" (keyup)="searchFilter()" placeholder="Search by any column">
+        </div>
+        <div class="col-md-3 mb-3">
+          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#downloadModal">
+            <span class="bi bi-file-earmark-arrow-down"></span> Download
+          </button>
+        </div> 
+      </div>      
+  
 
+<!-- Add a modal dialog box for date selection -->
+<div class="modal" tabindex="-1" role="dialog" id="downloadModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Download Excel File</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">From Date:</label>
+               
+                <input type="date" class="form-control" [(ngModel)]="fromDate" max="{{this.startDate}}">
+              
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">To Date:</label>
+                <input type="date" class="form-control" [(ngModel)]="endDate" max="{{this.startDate}}" min="{{this.fromDate}}">
+              </div>  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" (click)="download()">Download</button>
+        </div>
+      </div>
+    </div>
+  </div>
     <div class="container tbl-container">
         <div class="row tbl-fixed">
             <div class="result-loader" *ngIf="resultloader">
@@ -67,23 +98,26 @@
         </div>
         <p>Row Count: {{rowCount}}</p>
         <div class="row justify-content-center" style="margin-top: 10px;">
+          <nav>
+              <ul class="pagination justify-content-center">
+                  <li class="page-item"><button class="btn btn-info" (click)="OnPreviousClicked()"
+                          (mousedown)="OnPreviousHeld()" (mouseup)="OnPreviousReleased()"
+                          [disabled]="!(currentPage > 1)">Previous</button></li>
+                  <li class="page-item active">
+                      <label style="margin-left:10px">Page</label>
+                      <input type="number" style="width: 3.2rem; height: 1.9rem;margin-right: 5px;"
+                          [value]="totalPages === 0 ? 0 : currentPage" [min]="totalPages === 0 ? 0 : 1"
+                          (change)="OnPageNumberChanged($event)" [max]="totalPages">
 
-            <nav>
-                <ul class="pagination justify-content-center">
-                    <li class="page-item"><button class="btn btn-info" (click)="OnPreviousClicked()"
-                            [disabled]="!(currentPage > 1)">Previous</button></li>
-                    <li class="page-item active">
-                        <label style="margin-left:10px">Page</label>
-                        <input type="number" style="width: 2.2rem; height: 1.9rem;margin-right: 5px;"
-                            value="{{currentPage}}" (change)="OnPageNumberChanged($event)">
-                        <label>of
-                            {{totalPages}}
-                        </label>
-                    </li>
-                    <li class="page-item"><button class="btn btn-info" (click)="OnNextClicked()"
-                            [disabled]="(currentPage == totalPages)">Next</button></li>
-                </ul>
-            </nav>
-        </div>
+                      <label>of {{totalPages}}</label>
+                  </li>
+                  <li class="page-item">
+                      <button class="btn btn-info" (click)="OnNextClicked()" (mousedown)="OnNextHeld()"
+                          (mouseup)="OnNextReleased()" [disabled]="(currentPage == totalPages)">Next</button>
+                  </li>
+
+              </ul>
+          </nav>
+      </div>
     </div>
 </div>

@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AccountserviceService } from '../services/accountservice.service';
 import { DomainService } from '../services/domain.service';
 import { ExcelService } from '../services/excel.service';
 import { LoginService } from '../services/login.service';
 
 @Component({
-  selector: 'app-domain',
-  templateUrl: './domain.component.html',
-  styleUrls: ['./domain.component.css']
+  selector: 'app-configuration',
+  templateUrl: './configuration.component.html',
+  styleUrls: ['./configuration.component.css']
 })
+export class ConfigurationComponent implements OnInit {
 
-export class DomainComponent implements OnInit {
   DomainList: any = [];
   submitted: boolean = false;
   editmode: boolean = false;
@@ -27,11 +28,45 @@ export class DomainComponent implements OnInit {
   searchText: any;
   batchFilteredRecord: any;
   rowCount: Number;
-  prevDomainName: any;
-  nextInterval: any;
-  previousInterval: any;
+  module:string="Account";
 
-  constructor(private service: DomainService, private excelService: ExcelService, private loginservice: LoginService) {
+  buttons: Array<{label: string}> = [
+    {
+      label: 'Account'
+    },
+    {
+      label: 'DellManager'
+    },
+    {
+      label: 'Domain'
+    },
+    {
+      label: 'Location'
+    },
+    {
+      label: 'Recruiter'
+    },
+    {
+      label: 'Region'
+    },
+    {
+      label: 'Roles'
+    },
+    {
+      label: 'Status'
+    },
+    {
+      label: 'Technology'
+    },
+    {
+      label: 'USTPOC'
+    },
+    {
+      label: 'USTTPM'
+    }
+  ]
+
+  constructor(private accountService:AccountserviceService,private service: DomainService, private excelService: ExcelService, private loginservice: LoginService) {
     //this.isAuthor = this.loginservice.isAuthor;
   }
 
@@ -62,41 +97,26 @@ export class DomainComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
     if (this.domainForm.invalid) {
       return;
     }
 
-    if (this.editmode) {
-      if (!this.isDuplicate(true)) {
-        this.onEdit();
-      }
-    }
-    else {
-      if (!this.isDuplicate(false)) {
-        this.onAdd();
-      }
-    }
-  }
-
-  isDuplicate(isEdit: boolean) {
-    let checkDuplicate = true;
     let formValue = this.domainForm.value;
     if (formValue != null) {
       let domainName = formValue.domainName;
-      if (isEdit && this.prevDomainName.trim().toLowerCase() === domainName.trim().toLowerCase()) {
-        checkDuplicate = false;
-      }
-
-      if (checkDuplicate) {
-        var result = this.DomainList.find(item => item.domainName.trim().toLowerCase() === domainName.trim().toLowerCase());
-        if (result != null) {
-          alert('Duplicate record -"' + domainName + '" already exists');
-          return true;
-        }
+      var result = this.DomainList.find(item => item.domainName.trim().toLowerCase() === domainName.trim().toLowerCase());
+      if (result != null) {
+        return alert('Duplicate record -"' + domainName + '" already exists');
       }
     }
-    return false;
+
+    if (this.editmode) {
+      this.onEdit();
+    }
+    else {
+      this.onAdd();
+    }
+
   }
 
   onEdit() {
@@ -121,7 +141,6 @@ export class DomainComponent implements OnInit {
 
   onAdd() {
     let formValue = this.domainForm.value;
-
     let obj = {
       domainName: formValue.domainName,
       type: "post",
@@ -139,7 +158,6 @@ export class DomainComponent implements OnInit {
     this.domainForm.patchValue({
       domainName: data.domainName,
     })
-    this.prevDomainName = data.domainName;
   }
 
   download() {
@@ -164,46 +182,19 @@ export class DomainComponent implements OnInit {
     })
   }
 
-  // deleteDetails(domain:any){
-  //   this.Id=domain.domainId;
-  //   var decision=confirm('Are you sure you want to delete?');
-  //   if(decision){
-  //     this.service.DeleteDomainData(domain.domainId).subscribe(res=>{
-  //       alert('Domain with domainId '+this.Id+ 'Deleted Successfully');
-  //       this.GetAllDomainData();
-  //       this.Id=null;
-  //     })
-  //   }
-  //  else{
-  //   alert('Domain with domainId ' +this.Id+ ' Not Deleted')
-  //  }
-  //}
-  OnNextHeld() {
-    this.nextInterval = setInterval(() => {
-      if (this.currentPage < this.totalPages) {
-        this.OnNextClicked();
-      } else {
-        clearInterval(this.nextInterval);
-      }
-    }, 200);
-  }
-  
-  OnNextReleased() {
-    clearInterval(this.nextInterval);
-  }
-  
-  OnPreviousHeld() {
-    this.previousInterval = setInterval(() => {
-      if (this.currentPage > 1) {
-        this.OnPreviousClicked();
-      } else {
-        clearInterval(this.previousInterval);
-      }
-    }, 200);
-  }
-  
-  OnPreviousReleased() {
-    clearInterval(this.previousInterval);
+  deleteDetails(domain:any){
+    this.Id=domain.domainId;
+    var decision=confirm('Are you sure you want to delete?');
+    if(decision){
+      this.service.DeleteDomainData(domain.domainId).subscribe(res=>{
+        alert('Domain with domainId '+this.Id+ 'Deleted Successfully');
+        this.GetAllDomainData();
+        this.Id=null;
+      })
+    }
+   else{
+    alert('Domain with domainId ' +this.Id+ ' Not Deleted')
+   }
   }
 
   OnPreviousClicked() {
@@ -233,7 +224,6 @@ export class DomainComponent implements OnInit {
 
     this.batchRecord = this.DomainList.slice(startIndex, endIndex);
   }
-
 
   OnPageNumberChanged(event: any) {
     let startIndex: number = 0;
@@ -299,9 +289,29 @@ export class DomainComponent implements OnInit {
       this.batchRecord = [];
       this.isBatchSearch = false;
     }
-
-    // if (this.searchText.trim() == "") {
-    //     this.SetDefaultPaginationForcly(this.batchRecord)
-    // }
   }
+
+  onclick(selected : string) {
+    this.module=selected;
+    if(selected=="Account")
+    {
+      this.resultloader = true;
+      this.accountService.GetAllAccountData().subscribe(data => {
+      this.DomainList = [];
+      data.forEach(function(element){
+          console.log(element);
+          element.copyto(this.DomainList);
+      });
+      this.rowCount = this.DomainList.length;
+      this.resultloader = false;
+      this.totalPages = Math.ceil(this.DomainList.length / this.pageSizeSelected);
+      this.GetDomainDetails();
+      this.SetDefaultPagination();
+    }, err => {
+      console.log(err)
+    })
+    }
+  }
+
+
 }

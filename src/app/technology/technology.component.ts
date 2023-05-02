@@ -31,6 +31,11 @@ export class TechnologyComponent implements OnInit {
   rowCount: Number;
   prevTechnologyName: any;
   prevDomainId: any;
+  timer:any
+  nextInterval: any;
+  previousInterval: any;
+  maxCountError:string;
+  minCountError:string;
 
   constructor(private service: TechnologyService, private domainService: DomainService, private excelService: ExcelService, private login: LoginService) {
   }
@@ -39,6 +44,7 @@ export class TechnologyComponent implements OnInit {
     this.isAuthor = JSON.parse(sessionStorage.getItem('author'));
     await this.populateDropdowns();
     this.GetAllTechData();
+    this.timer = null;
   }
 
   techForm = new FormGroup({
@@ -88,6 +94,37 @@ export class TechnologyComponent implements OnInit {
       }
     }
   }
+
+  OnNextHeld() {
+    this.nextInterval = setInterval(() => {
+      if (this.currentPage < this.totalPages) {
+        this.OnNextClicked();
+      } else {
+        clearInterval(this.nextInterval);
+      }
+    }, 200);
+  }
+  
+  OnNextReleased() {
+    clearInterval(this.nextInterval);
+  }
+  
+  OnPreviousHeld() {
+    this.previousInterval = setInterval(() => {
+      if (this.currentPage > 1) {
+        this.OnPreviousClicked();
+      } else {
+        clearInterval(this.previousInterval);
+      }
+    }, 200);
+  }
+  
+  OnPreviousReleased() {
+    clearInterval(this.previousInterval);
+  }
+  
+
+
 
   isDuplicate(isEdit: boolean) {
     let checkDuplicate = true;
@@ -242,7 +279,12 @@ export class TechnologyComponent implements OnInit {
     endIndex = Number(this.pageSizeSelected) + startIndex;
 
     this.batchRecord = this.TechData.slice(startIndex, endIndex);
+    
+  
   }
+ 
+  
+  
 
   OnPageNumberChanged(event: any) {
     let startIndex: number = 0;

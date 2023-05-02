@@ -38,6 +38,8 @@ export class CandidatemappingComponent implements OnInit {
   StatusData: StatusModel[] = [];
   prevSowId: any;
   prevCandidateId: any;
+  nextInterval: any;
+  previousInterval: any;
 
   constructor(private service: CandidatemappingService, private candidateService: CandidateService, private sowService: SOWService,
     private statusService: StatusserviceService, private excelService: ExcelService,
@@ -52,6 +54,33 @@ export class CandidatemappingComponent implements OnInit {
     this.isAuthor = JSON.parse(sessionStorage.getItem('author'));
     console.log(this.isAuthor)
     this.GetMappingsData();
+  }
+  OnNextHeld() {
+    this.nextInterval = setInterval(() => {
+      if (this.currentPage < this.totalPages) {
+        this.OnNextClicked();
+      } else {
+        clearInterval(this.nextInterval);
+      }
+    }, 200);
+  }
+  
+  OnNextReleased() {
+    clearInterval(this.nextInterval);
+  }
+  
+  OnPreviousHeld() {
+    this.previousInterval = setInterval(() => {
+      if (this.currentPage > 1) {
+        this.OnPreviousClicked();
+      } else {
+        clearInterval(this.previousInterval);
+      }
+    }, 200);
+  }
+  
+  OnPreviousReleased() {
+    clearInterval(this.previousInterval);
   }
 
   GetMappingsData() {

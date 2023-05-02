@@ -1,161 +1,175 @@
-<h2>Welcome {{Username}}!</h2>
-<div class="container" >
-    
-    <div class="row">
-        <div class="col-12">
-            <div class="card card-default shadow rounded" style="width: 103%">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-6" >
-                            <ul class="tabs-container" >
-                                <li (click)="onTabClick('SO')" [class.active]="activeTab == 'SO'" class="tab-link">SO
-                                </li>
-                                <li (click)="onTabClick('Candidates')" [class.active]="activeTab == 'Candidates'"
-                                    class="tab-link">Candidates</li>
-                            </ul>
-                            <div *ngIf="activeTab == 'SO'" class="w-100">
-                                
-
-                                <select name="demo" #period (change)="onSelected(period.value)" class="dropdown">
-                                    <option default value="Weekly">Weekly</option>
-                                    <option value="Monthly">Monthly</option>
-                                    <option value="Fortnight">Fortnight</option>
-                                    <option value="Quarterly">Quarterly</option>
-                                </select>
-
-                                <div class="cards_wrap "style="" >
-                                    
-                                    <div class="card_item ">
-                                        <div class="card-header">                                                
-                                        <small class="text-muted">So Status</small>
-                                      </div>
-                                        <div class="card_inner">
-                                            
-                                            <ul *ngFor="let status of statuses">
-                                                <li>
-                                                    <div class="card-content">
-                                                    <label >{{status.name}}</label>
-                                                    <span style="margin-right: 20%;">:  {{status.count}} </span>
-                                                </div>
-                                                
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                    <div class="card_item">
-                                        <div class="card-header">
-
-                                            <small class="text-muted">Technology</small>
-                                          </div>
-                                        <div class="card_inner">
-                                          
-                                            <ul style="list-style: none;" *ngFor="let technology of technologies">
-                                                <li>
-                                                    <div class="card-content">
-                                                    <label style="  inline-size: 150px;
-                                                    overflow-wrap: break-word;" >{{technology.name}}</label>
-                                                    
-                                                    <span  >:  {{technology.count}} </span>
-                                                </div>
-                                                
-                                                </li>
-
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                    <div class="card_item">
-                                        <div class="card-header">
-
-                                            <small class="text-muted">Region</small>
-                                          </div>
-                                        
-                                        <div class="card_inner">
-                                            
-                                            <ul style="list-style: none;" *ngFor="let region of regions">
-                                              
-                                                <li>
-                                                    <div class="card-content">
-                                                    <label >{{region.name}}   </label>
-                                                    <span style="margin-right: 20%;">:  {{region.count}}   </span>
-                                                   
-                                                </div>
-                                                
-                                                </li>
-
-
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div> 
-
-                 
+<h2>Welcome {{ Username }}!</h2>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-default shadow rounded">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <ul class="nav nav-tabs">
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    [class.active]="activeTab == 'SO'"
+                    (click)="onTabClick('SO')"
+                    >SO</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    [class.active]="activeTab == 'Candidates'"
+                    (click)="onTabClick('Candidates')"
+                    >Candidates</a
+                  >
+                </li>
+              </ul>
+              <div class="tab-content mt-3">
+                <div
+                  *ngIf="activeTab == 'SO'"
+                  class="tab-pane fade show active"
+                >
+                  <div class="form-group">
+                    <label>Period</label>
+                    <select
+                      name="demo"
+                      #period
+                      (change)="onSelected(period.value)"
+                      class="form-control"
+                    >
+                      <option default value="Weekly">Weekly</option>
+                      <option value="Monthly">Monthly</option>
+                      <option value="Fortnight">Fortnight</option>
+                      <option value="Quarterly">Quarterly</option>
+                    </select>
+                  </div>
+                  <div class="cards_wrap">
+                    <div class="card_item">
+                      <div class="card-header">
+                        <small class="text-muted">So Status</small>
+                      </div>
+                      <div class="card_inner">
+                        <ul
+                          *ngFor="let status of statuses"
+                          class="list-group list-group-flush"
+                        >
+                          <li class="list-group-item">
+                            <div class="card-content">
+                              <label>{{ status.name }}</label>
+                              <span class="float-right">{{
+                                status.count
+                              }}</span>
                             </div>
-
-                            <div *ngIf="activeTab == 'Candidates'" class="w-100">
-                                <select name="demo" #period (change)="onSelectionChange(period.value)" class="dropdown">
-                                    <option default value="Weekly">Weekly</option>
-                                    <option value="Monthly">Monthly</option>
-                                    <option value="Fortnight">Fortnight</option>
-                                    <option value="Quarterly">Quarterly</option>
-                                </select>
-                                <br>
-                                 
-                                <div class="cards_wrap ">
-                                    
-                                    <div class="card_item">
-                                        <div class="card-header">
-                                                
-                                            <small class="text-muted">Status</small>
-                                          </div>
-                                        <div class="card_inner">
-                                           
-                                            
-                                              <ul style="list-style: none;" *ngFor="let e of SO">
-                                               
-                                                <label >{{e.name}} </label>
-                                                <span style="margin-right: 20%;">:  {{e.count}}</span>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="card_item">
-                                        <div class="card-header">
-                                                
-                                            <small class="text-muted">Location</small>
-                                          </div>
-                                        
-                                        <div class="card_inner">
-                                            
-                                              <ul style="list-style: none;" *ngFor="let loc of location">
-                                              
-                                                <label >{{loc.name}}  </label>
-                                                <span style="margin-right: 20%;">: {{loc.count}} </span>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="card_item">
-                                        <div class="card-header" style="min-height: 60px;">
-                                                
-                                            <small class="text-muted"></small>
-                                          </div>
-                                        
-                                        <div class="card_inner">
-                                            
-                                  
-                                        </div>
-                                    </div>
-              
-                                </div> 
-                              
-                            </div>
-
-
-                            
-                        </div>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
+                    <div class="card_item">
+                      <div class="card-header">
+                        <small class="text-muted">Technology</small>
+                      </div>
+                      <div class="card_inner">
+                        <ul
+                          *ngFor="let technology of technologies"
+                          class="list-group list-group-flush"
+                        >
+                          <li class="list-group-item">
+                            <div class="card-content">
+                              <label style="overflow-wrap: break-word">{{
+                                technology.name
+                              }}</label>
+                              <span class="float-right">{{
+                                technology.count
+                              }}</span>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="card_item">
+                      <div class="card-header">
+                        <small class="text-muted">Region</small>
+                      </div>
+                      <div class="card_inner">
+                        <ul
+                          *ngFor="let region of regions"
+                          class="list-group list-group-flush"
+                        >
+                          <li class="list-group-item">
+                            <div class="card-content">
+                              <label>{{ region.name }}</label>
+                              <span class="float-right">{{
+                                region.count
+                              }}</span>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+                <div class="tab-content mt-3">
+                  <div
+                    *ngIf="activeTab == 'Candidates'"
+                    class="tab-pane fade show active"
+                  >
+                    <div class="form-group">
+                      <label>Period</label>
+                      <select
+                        name="demo"
+                        #period
+                        (change)="onSelected(period.value)"
+                        class="form-control"
+                      >
+                        <option default value="Weekly">Weekly</option>
+                        <option value="Monthly">Monthly</option>
+                        <option value="Fortnight">Fortnight</option>
+                        <option value="Quarterly">Quarterly</option>
+                      </select>
+                    </div>
+                    <div class="cards_wrap">
+                      <div class="card_item">
+                        <div class="card-header">
+                          <small class="text-muted">Status</small>
+                        </div>
+                        <div class="card_inner">
+                          <ul
+                            class="list-group list-group-flush"
+                            *ngFor="let e of SO"
+                          >
+                            <label>{{ e.name }} </label>
+                            <span class="float-right">: {{ e.count }}</span>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="card_item">
+                        <div class="card-header">
+                          <small class="text-muted">Location</small>
+                        </div>
+                        <div class="card_inner">
+                          <ul
+                            class="list-group list-group-flush"
+                            *ngFor="let loc of location"
+                          >
+                            <label>{{ loc.name }} </label>
+                            <span class="float-right">: {{ loc.count }} </span>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="card_item">
+                        <div class="card-header" style="min-height: 60px">
+                          <small class="text-muted"></small>
+                        </div>
+                        <div class="card_inner"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

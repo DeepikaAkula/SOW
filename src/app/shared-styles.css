@@ -1,0 +1,66 @@
+.loading-image,
+.loading-image:after {
+border-radius: 50%;
+width: 48px;
+height: 48px;
+}
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+button[type=submit],[type=reset] {
+  /* background-color: #04AA6D; */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+  margin-right: 10px;
+}
+
+.form-control {
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+.form-control:hover {
+  border-color:black !important;
+  transform: scale(1.01);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.42);
+}
+
+
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.row .header {
+  order: 1; /* Moves the h2 tag to the beginning */
+}
+
+.row .btn-close {
+  order: 2; /* Moves the button X (close)to the end */
+  justify-content: flex-end;
+}
+
+
+button[type=button]{
+  float: right;
+}

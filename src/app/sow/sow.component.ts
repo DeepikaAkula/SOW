@@ -65,6 +65,8 @@ export class SOWComponent implements OnInit {
   fromDate: string | number | Date;
   endDate: string | number | Date;
   startDate:string;
+  nextInterval: any;
+  previousInterval: any;
 
   constructor(private service: SOWService, private regionService: RegionserviceService, private locationService: LocationserviceService,
     private accountService: AccountserviceService, private tpmService: UsttpmserviceService, private pocService: UstpocserviceService, private recruiterService: RecruiterserviceService,
@@ -112,6 +114,34 @@ export class SOWComponent implements OnInit {
   })
 
   get f() { return this.SowForm.controls; }
+  OnNextHeld() {
+    this.nextInterval = setInterval(() => {
+      if (this.currentPage < this.totalPages) {
+        this.OnNextClicked();
+      } else {
+        clearInterval(this.nextInterval);
+      }
+    }, 200);
+  }
+  
+  OnNextReleased() {
+    clearInterval(this.nextInterval);
+  }
+  
+  OnPreviousHeld() {
+    this.previousInterval = setInterval(() => {
+      if (this.currentPage > 1) {
+        this.OnPreviousClicked();
+      } else {
+        clearInterval(this.previousInterval);
+      }
+    }, 200);
+  }
+  
+  OnPreviousReleased() {
+    clearInterval(this.previousInterval);
+  }
+
 
   GetSowData() {
     this.resultloader = true;

@@ -1,27 +1,96 @@
-<div class="hamburger-menu" *ngIf="header">
-    <input id="menu__toggle" type="checkbox" [(ngModel)]="isChecked" (change)="update()" />
-    <label class="menu__btn" for="menu__toggle"> <span></span> </label>
-    <ul class="menu__box">
-        <li *ngIf="dashboard"><a class="menu__item" routerLink="/dashboard" routerLinkActive="active"
-                (click)="onclick()">Dashboard</a></li>
-        <li *ngIf="sow"><a class="menu__item" routerLink="/sow" routerLinkActive="active" (click)="onclick()">SO
-                Details</a>
-        </li>
-        <li *ngIf="candidatedetails"><a class="menu__item" routerLink="/candidatedetails" routerLinkActive="active"
-                (click)="onclick()">Candidate Details</a></li>
-        <li *ngIf="mapping"><a class="menu__item" routerLink="/mapping" routerLinkActive="active"
-                (click)="onclick()">SOCandidate Mapping</a></li>
-        <li *ngIf="domain"><a class="menu__item" routerLink="/domain" routerLinkActive="active"
-                (click)="onclick()">Domain</a></li>
-        <li *ngIf="technology"><a class="menu__item" routerLink="/technology" routerLinkActive="active"
-                (click)="onclick()">Technology</a></li>
-        <li *ngIf="technology"><a class="menu__item" (click)="managePassword()">Manage Password</a></li>  
-        <ul *ngIf="managePw">   
-        <li *ngIf="registration"><a class="menu__item" routerLink="/registration" routerLinkActive="active"
-                        (click)="onclick()">Registration</a></li>
-        <li *ngIf="ChangePW"><a class="menu__item" routerLink="/changePw" routerLinkActive="active"
-                                (click)="onclick()">Change Password</a></li>
-        </ul>  
-        <li *ngIf="login"><a class="menu__item" routerLink='/login' (click)="logOut()">LogOut</a></li>
+<div class="hamburger-menu" *ngIf="header && login">
+  <input
+    id="menu__toggle"
+    type="checkbox"
+    [(ngModel)]="isChecked"
+    (change)="update()"
+  />
+  <label class="menu__btn" for="menu__toggle"> <span></span> </label>
+  <ul class="menu__box">
+    <li *ngIf="dashboard">
+      <a
+        class="menu__item"
+        routerLink="/dashboard"
+        routerLinkActive="active"
+        (click)="onclick()"
+        ><i class="fa fa-desktop"></i><br />Dashboard</a
+      >
+    </li>
+    <li *ngIf="sow">
+      <a
+        class="menu__item"
+        routerLink="/sow"
+        routerLinkActive="active"
+        (click)="onclick()"
+        ><i class="fa fa-th-list"></i> <br />SO Details</a
+      >
+    </li>
+    <li *ngIf="candidatedetails">
+      <a
+        class="menu__item"
+        routerLink="/candidatedetails"
+        routerLinkActive="active"
+        (click)="onclick()"
+        ><i class="fa fa-users"></i><br />Candidate Details</a
+      >
+    </li>
+    <li *ngIf="mapping">
+      <a
+        class="menu__item"
+        routerLink="/mapping"
+        routerLinkActive="active"
+        (click)="onclick()"
+        ><i class="fa fa-code-fork"></i><br />SOCandidate Mapping</a
+      >
+    </li>
+    <li *ngIf="domain">
+      <a
+        class="menu__item"
+        routerLink="/domain"
+        routerLinkActive="active"
+        (click)="onclick()"
+        ><i class="fa fa-globe"></i><br />Domain</a
+      >
+    </li>
+    <li *ngIf="technology">
+      <a
+        class="menu__item"
+        routerLink="/technology"
+        routerLinkActive="active"
+        (click)="onclick()"
+        ><i class="fa fa-rocket"></i><br />Technology</a
+      >
+    </li>
+    <li *ngIf="technology" style="cursor: pointer">
+      <a class="menu__item" (click)="managePassword()"
+        ><i class="fa fa-cog"></i><br />User Settings</a
+      >
+    </li>
+    <ul *ngIf="managePw">
+      <li *ngIf="registration" style="list-style: none; margin-left: 0px">
+        <a
+          class="menu__item"
+          routerLink="/registration"
+          routerLinkActive="active"
+          (click)="onclick()"
+        >
+          <i class="fa fa-pencil-square"></i><br />Registration</a
+        >
+      </li>
+      <li *ngIf="ChangePW" style="list-style: none">
+        <a
+          class="menu__item"
+          routerLink="/changePw"
+          routerLinkActive="active"
+          (click)="onclick()"
+          ><i class="fa fa-key"></i><br />Change Password</a
+        >
+      </li>
     </ul>
+    <li *ngIf="login">
+      <a class="menu__item" routerLink="/login" (click)="logOut()">
+        <i class="fa fa-sign-out"></i><br />LogOut</a
+      >
+    </li>
+  </ul>
 </div>

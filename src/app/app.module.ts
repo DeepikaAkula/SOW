@@ -37,6 +37,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardService } from './services/dashboard.service';
 import { RegistrationComponent } from './registration/registration.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ServerdownComponent } from './serverdown/serverdown.component';
+import { PaginationcommonComponent } from './paginationcommon/paginationcommon.component';
 
 
 @NgModule({
@@ -54,6 +56,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     CandidateListComponent,
     RegistrationComponent,
     ChangePasswordComponent,
+    ServerdownComponent,
+    PaginationcommonComponent,
 
   ],
   imports: [
